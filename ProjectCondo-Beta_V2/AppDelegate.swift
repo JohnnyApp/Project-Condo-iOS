@@ -12,10 +12,25 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var globalToolBar: CustomNavBar!
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // Build persistent navigation bar
+        let tb = CustomNavBar()
+        tb.barStyle = .default
+        tb.sizeToFit()
+        tb.frame = CGRect(x: tb.frame.origin.x, y: tb.frame.origin.y, width: tb.frame.size.width, height: 67)
+        
+        tb.buildLogo()
+        tb.buildButtons()
+        tb.reloadInputViews()
+        
+        window?.rootViewController?.view.addSubview(tb)
+        globalToolBar = tb
+        
         return true
     }
 
@@ -40,7 +55,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+}
 
-
+extension UIViewController {
+    var navBar: CustomNavBar {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        return appDelegate.globalToolBar
+    }
 }
 

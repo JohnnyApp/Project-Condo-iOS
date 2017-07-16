@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DF05A0121EFA3E9500232A0B /* GroupRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF05A0111EFA3E9500232A0B /* GroupRecord.swift */; };
+		DF5FA4C11F00921500738B49 /* UserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5FA4C01F00921500738B49 /* UserInterface.swift */; };
+		DF5FA4C31F0093E800738B49 /* CustomNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5FA4C21F0093E800738B49 /* CustomNavBar.swift */; };
 		DF6E83031EF794ED009CF79E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6E83021EF794ED009CF79E /* AppDelegate.swift */; };
 		DF6E83051EF794ED009CF79E /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6E83041EF794ED009CF79E /* FirstViewController.swift */; };
 		DF6E83071EF794ED009CF79E /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6E83061EF794ED009CF79E /* SecondViewController.swift */; };
@@ -15,6 +18,10 @@
 		DF6E830F1EF794ED009CF79E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF6E830D1EF794ED009CF79E /* LaunchScreen.storyboard */; };
 		DF6E831A1EF794ED009CF79E /* ProjectCondo_Beta_V2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6E83191EF794ED009CF79E /* ProjectCondo_Beta_V2Tests.swift */; };
 		DF6E83251EF794ED009CF79E /* ProjectCondo_Beta_V2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6E83241EF794ED009CF79E /* ProjectCondo_Beta_V2UITests.swift */; };
+		DF6E83331EF7960B009CF79E /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6E83321EF7960B009CF79E /* MainViewController.swift */; };
+		DF6E83351EF7975E009CF79E /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6E83341EF7975E009CF79E /* RegisterViewController.swift */; };
+		DF6E83381EF7A3AC009CF79E /* RestAPIEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6E83371EF7A3AC009CF79E /* RestAPIEngine.swift */; };
+		DFDE3E731F1ACF95003F3F99 /* WhiteBoardTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDE3E721F1ACF95003F3F99 /* WhiteBoardTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +42,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DF05A0111EFA3E9500232A0B /* GroupRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupRecord.swift; sourceTree = "<group>"; };
+		DF5FA4C01F00921500738B49 /* UserInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInterface.swift; sourceTree = "<group>"; };
+		DF5FA4C21F0093E800738B49 /* CustomNavBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomNavBar.swift; sourceTree = "<group>"; };
 		DF6E82FF1EF794ED009CF79E /* ProjectCondo-Beta_V2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ProjectCondo-Beta_V2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF6E83021EF794ED009CF79E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DF6E83041EF794ED009CF79E /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -49,6 +59,10 @@
 		DF6E83201EF794ED009CF79E /* ProjectCondo-Beta_V2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ProjectCondo-Beta_V2UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF6E83241EF794ED009CF79E /* ProjectCondo_Beta_V2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCondo_Beta_V2UITests.swift; sourceTree = "<group>"; };
 		DF6E83261EF794ED009CF79E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DF6E83321EF7960B009CF79E /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		DF6E83341EF7975E009CF79E /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		DF6E83371EF7A3AC009CF79E /* RestAPIEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RestAPIEngine.swift; path = ../RestAPIEngine.swift; sourceTree = "<group>"; };
+		DFDE3E721F1ACF95003F3F99 /* WhiteBoardTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WhiteBoardTableViewController.swift; path = ../WhiteBoardTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +90,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DF05A0101EFA3E8200232A0B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DF05A0111EFA3E9500232A0B /* GroupRecord.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		DF5FA4BD1F00918800738B49 /* Utlities */ = {
+			isa = PBXGroup;
+			children = (
+				DF5FA4C01F00921500738B49 /* UserInterface.swift */,
+			);
+			name = Utlities;
+			sourceTree = "<group>";
+		};
 		DF6E82F61EF794ED009CF79E = {
 			isa = PBXGroup;
 			children = (
@@ -100,6 +130,10 @@
 			isa = PBXGroup;
 			children = (
 				DF6E83021EF794ED009CF79E /* AppDelegate.swift */,
+				DF5FA4BD1F00918800738B49 /* Utlities */,
+				DF05A0101EFA3E8200232A0B /* Model */,
+				DF6E83391EF7A3B4009CF79E /* REST Engine */,
+				DF6E83361EF7A14E009CF79E /* View Controllers */,
 				DF6E83041EF794ED009CF79E /* FirstViewController.swift */,
 				DF6E83061EF794ED009CF79E /* SecondViewController.swift */,
 				DF6E83081EF794ED009CF79E /* Main.storyboard */,
@@ -126,6 +160,25 @@
 				DF6E83261EF794ED009CF79E /* Info.plist */,
 			);
 			path = "ProjectCondo-Beta_V2UITests";
+			sourceTree = "<group>";
+		};
+		DF6E83361EF7A14E009CF79E /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				DF5FA4C21F0093E800738B49 /* CustomNavBar.swift */,
+				DF6E83321EF7960B009CF79E /* MainViewController.swift */,
+				DF6E83341EF7975E009CF79E /* RegisterViewController.swift */,
+				DFDE3E721F1ACF95003F3F99 /* WhiteBoardTableViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		DF6E83391EF7A3B4009CF79E /* REST Engine */ = {
+			isa = PBXGroup;
+			children = (
+				DF6E83371EF7A3AC009CF79E /* RestAPIEngine.swift */,
+			);
+			name = "REST Engine";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -262,9 +315,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF6E83381EF7A3AC009CF79E /* RestAPIEngine.swift in Sources */,
 				DF6E83071EF794ED009CF79E /* SecondViewController.swift in Sources */,
+				DF6E83351EF7975E009CF79E /* RegisterViewController.swift in Sources */,
+				DF5FA4C31F0093E800738B49 /* CustomNavBar.swift in Sources */,
 				DF6E83031EF794ED009CF79E /* AppDelegate.swift in Sources */,
 				DF6E83051EF794ED009CF79E /* FirstViewController.swift in Sources */,
+				DFDE3E731F1ACF95003F3F99 /* WhiteBoardTableViewController.swift in Sources */,
+				DF05A0121EFA3E9500232A0B /* GroupRecord.swift in Sources */,
+				DF5FA4C11F00921500738B49 /* UserInterface.swift in Sources */,
+				DF6E83331EF7960B009CF79E /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -507,6 +567,7 @@
 				DF6E832B1EF794ED009CF79E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DF6E832C1EF794ED009CF79E /* Build configuration list for PBXNativeTarget "ProjectCondo-Beta_V2Tests" */ = {
 			isa = XCConfigurationList;
@@ -515,6 +576,7 @@
 				DF6E832E1EF794ED009CF79E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DF6E832F1EF794ED009CF79E /* Build configuration list for PBXNativeTarget "ProjectCondo-Beta_V2UITests" */ = {
 			isa = XCConfigurationList;
@@ -523,6 +585,7 @@
 				DF6E83311EF794ED009CF79E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

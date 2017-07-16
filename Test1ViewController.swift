@@ -10,9 +10,15 @@ import UIKit
 
 class Test1ViewController: UIViewController {
 
+    @IBOutlet weak var FirstnameLbl: UILabel!
+    @IBOutlet weak var LastnameLbl: UILabel!
+    @IBOutlet weak var emailLbl: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        FirstnameLbl.text = "UGLY"
+        LastnameLbl.text = "ASS"
+        emailLbl.text = "SHIT"
         // Do any additional setup after loading the view.
     }
 

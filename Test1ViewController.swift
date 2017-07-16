@@ -16,9 +16,12 @@ class Test1ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        FirstnameLbl.text = "UGLY"
-        LastnameLbl.text = "ASS"
-        emailLbl.text = "SHIT"
+        
+        let defaults = UserDefaults.standard
+        
+        FirstnameLbl.text = defaults.object(forKey: "firstname") as! String?
+        LastnameLbl.text = defaults.object(forKey: "lastname") as! String?
+        emailLbl.text = defaults.object(forKey: "email") as! String?
         // Do any additional setup after loading the view.
     }
 

@@ -22,6 +22,7 @@
 		DF6E83351EF7975E009CF79E /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6E83341EF7975E009CF79E /* RegisterViewController.swift */; };
 		DF6E83381EF7A3AC009CF79E /* RestAPIEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6E83371EF7A3AC009CF79E /* RestAPIEngine.swift */; };
 		DFDE3E731F1ACF95003F3F99 /* WhiteBoardTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDE3E721F1ACF95003F3F99 /* WhiteBoardTableViewController.swift */; };
+		DFDE3E751F1AFF09003F3F99 /* Test1TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDE3E741F1AFF09003F3F99 /* Test1TableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		DF6E83341EF7975E009CF79E /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		DF6E83371EF7A3AC009CF79E /* RestAPIEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RestAPIEngine.swift; path = ../RestAPIEngine.swift; sourceTree = "<group>"; };
 		DFDE3E721F1ACF95003F3F99 /* WhiteBoardTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WhiteBoardTableViewController.swift; path = ../WhiteBoardTableViewController.swift; sourceTree = "<group>"; };
+		DFDE3E741F1AFF09003F3F99 /* Test1TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Test1TableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +171,7 @@
 				DF6E83321EF7960B009CF79E /* MainViewController.swift */,
 				DF6E83341EF7975E009CF79E /* RegisterViewController.swift */,
 				DFDE3E721F1ACF95003F3F99 /* WhiteBoardTableViewController.swift */,
+				DFDE3E741F1AFF09003F3F99 /* Test1TableViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -323,6 +326,7 @@
 				DF6E83051EF794ED009CF79E /* FirstViewController.swift in Sources */,
 				DFDE3E731F1ACF95003F3F99 /* WhiteBoardTableViewController.swift in Sources */,
 				DF05A0121EFA3E9500232A0B /* GroupRecord.swift in Sources */,
+				DFDE3E751F1AFF09003F3F99 /* Test1TableViewController.swift in Sources */,
 				DF5FA4C11F00921500738B49 /* UserInterface.swift in Sources */,
 				DF6E83331EF7960B009CF79E /* MainViewController.swift in Sources */,
 			);

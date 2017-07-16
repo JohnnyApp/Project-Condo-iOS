@@ -84,6 +84,13 @@ final class RESTAPIEngine {
                         self.sessionToken = outputDict["session_token"] as? String
                         let defaults = UserDefaults.standard
                         defaults.setValue(_email, forKey: "email")
+                        
+                        if (outputDict["first_name"] != nil) {
+                            defaults.setValue(outputDict["first_name"] as? String, forKey:"firstname")
+                        }
+                        if (outputDict["last_name"] != nil) {
+                            defaults.setValue(outputDict["last_name"] as? String, forKey:"lastname")
+                        }
                         //Set Username
                         defaults.synchronize()
                     }

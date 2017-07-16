@@ -15,7 +15,6 @@ import Foundation
 private let ApiKey = "4be93293a709f0bbad4e5f6da89130c870889c34471ad9849ee8a74c52336c2a"
 //private let BaseInstanceUrl = "http://localhost:8080/api/v2"
 private let BaseInstanceUrl = "http://ec2-52-37-95-16.us-west-2.compute.amazonaws.com/api/v2"
-//private let UserRegisterExtension = "/user/register?login=true"
 private let UserRegisterExtension = "/user/register?login=true"
 private let UserLoginExtension = "/user/session"
 private let kSessionTokenKey = "SessionToken"

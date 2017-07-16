@@ -45,12 +45,10 @@ class MainViewController: UIViewController {
     fileprivate func showRegisterViewController() {
         let registerViewController = self.storyboard?.instantiateViewController(withIdentifier: "UserRegistrationView")
         self.present(registerViewController!, animated: true, completion: nil)
-        //self.navigationController?.pushViewController(registerViewController!, animated: true
     }
     
     fileprivate func showMainViewController() {
         let MainViewController = self.storyboard?.instantiateViewController(withIdentifier: "MainViewController")
         self.present(MainViewController!, animated: true, completion: nil)
-        //self.navigationController?.pushViewController(MainViewController!, animated: true)
     }
 }

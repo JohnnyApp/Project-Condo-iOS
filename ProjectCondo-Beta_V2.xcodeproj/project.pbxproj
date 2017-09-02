@@ -23,6 +23,8 @@
 		DF6E83381EF7A3AC009CF79E /* RestAPIEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6E83371EF7A3AC009CF79E /* RestAPIEngine.swift */; };
 		DFDE3E731F1ACF95003F3F99 /* WhiteBoardTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDE3E721F1ACF95003F3F99 /* WhiteBoardTableViewController.swift */; };
 		DFDE3E771F1AFF82003F3F99 /* Test1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDE3E761F1AFF82003F3F99 /* Test1ViewController.swift */; };
+		DFF089501F3E4BA5001C9262 /* CreateHouseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF0894F1F3E4BA5001C9262 /* CreateHouseViewController.swift */; };
+		DFF089521F3E4DA6001C9262 /* HousesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF089511F3E4DA6001C9262 /* HousesTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +67,8 @@
 		DF6E83371EF7A3AC009CF79E /* RestAPIEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RestAPIEngine.swift; path = ../RestAPIEngine.swift; sourceTree = "<group>"; };
 		DFDE3E721F1ACF95003F3F99 /* WhiteBoardTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WhiteBoardTableViewController.swift; path = ../WhiteBoardTableViewController.swift; sourceTree = "<group>"; };
 		DFDE3E761F1AFF82003F3F99 /* Test1ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Test1ViewController.swift; path = ../Test1ViewController.swift; sourceTree = "<group>"; };
+		DFF0894F1F3E4BA5001C9262 /* CreateHouseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateHouseViewController.swift; sourceTree = "<group>"; };
+		DFF089511F3E4DA6001C9262 /* HousesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HousesTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,7 +171,9 @@
 		DF6E83361EF7A14E009CF79E /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				DFF0894F1F3E4BA5001C9262 /* CreateHouseViewController.swift */,
 				DF5FA4C21F0093E800738B49 /* CustomNavBar.swift */,
+				DFF089511F3E4DA6001C9262 /* HousesTableViewController.swift */,
 				DF6E83321EF7960B009CF79E /* MainViewController.swift */,
 				DF6E83341EF7975E009CF79E /* RegisterViewController.swift */,
 				DFDE3E721F1ACF95003F3F99 /* WhiteBoardTableViewController.swift */,
@@ -323,10 +329,12 @@
 				DFDE3E771F1AFF82003F3F99 /* Test1ViewController.swift in Sources */,
 				DF6E83351EF7975E009CF79E /* RegisterViewController.swift in Sources */,
 				DF5FA4C31F0093E800738B49 /* CustomNavBar.swift in Sources */,
+				DFF089521F3E4DA6001C9262 /* HousesTableViewController.swift in Sources */,
 				DF6E83031EF794ED009CF79E /* AppDelegate.swift in Sources */,
 				DF6E83051EF794ED009CF79E /* FirstViewController.swift in Sources */,
 				DFDE3E731F1ACF95003F3F99 /* WhiteBoardTableViewController.swift in Sources */,
 				DF05A0121EFA3E9500232A0B /* GroupRecord.swift in Sources */,
+				DFF089501F3E4BA5001C9262 /* CreateHouseViewController.swift in Sources */,
 				DF5FA4C11F00921500738B49 /* UserInterface.swift in Sources */,
 				DF6E83331EF7960B009CF79E /* MainViewController.swift in Sources */,
 			);

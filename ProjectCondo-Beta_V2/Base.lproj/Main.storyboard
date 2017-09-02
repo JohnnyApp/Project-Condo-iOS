@@ -409,7 +409,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rjT-cN-rU7" id="Yux-fr-wap">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -543,7 +543,7 @@
         <!--Navigation Controller-->
         <scene sceneID="xfo-fR-yt1">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="o7J-li-Ej8" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="SelectHouseViewController" automaticallyAdjustsScrollViewInsets="NO" id="o7J-li-Ej8" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="dYf-PP-Lsz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>

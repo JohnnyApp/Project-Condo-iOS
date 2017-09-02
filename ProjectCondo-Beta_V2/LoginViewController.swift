@@ -18,9 +18,8 @@ class MainViewController: UIViewController {
         returnMsg = RESTAPIEngine.sharedEngine.loginEmail(_email: UsernameText.text!, _password: PasswordText.text!)
         
         if returnMsg == "" {
-            Alert.showAlertWithMessage("Success!", fromViewController: self)
-            //self.performSegue(withIdentifier: "GoToMainApp", sender: nil)
-            showMainViewController();
+            //Alert.showAlertWithMessage("Success!", fromViewController: self)
+            showHouseTableViewController();
         } else if returnMsg == "Invalid credentials supplied." {
             Alert.showAlertWithMessage("Email or Password was incorrect.", fromViewController: self)
             return
@@ -49,6 +48,11 @@ class MainViewController: UIViewController {
     
     fileprivate func showMainViewController() {
         let MainViewController = self.storyboard?.instantiateViewController(withIdentifier: "MainViewController")
+        self.present(MainViewController!, animated: true, completion: nil)
+    }
+    
+    fileprivate func showHouseTableViewController() {
+        let MainViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectHouseViewController")
         self.present(MainViewController!, animated: true, completion: nil)
     }
 }

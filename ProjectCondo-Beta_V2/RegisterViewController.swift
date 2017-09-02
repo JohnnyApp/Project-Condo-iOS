@@ -62,7 +62,7 @@ class RegisterViewController: UIViewController {
         
         if returnMsg == "" {
             Alert.showAlertWithMessage("Thanks for signing up!", fromViewController: self)
-            showMainViewController()
+            showHouseTableViewController()
         } else if returnMsg == "servererror" {
             Alert.showAlertWithMessage("Sorry! Please try again later.", fromViewController: self)
             return
@@ -83,6 +83,11 @@ class RegisterViewController: UIViewController {
     
     fileprivate func showMainViewController() {
         let MainViewController = self.storyboard?.instantiateViewController(withIdentifier: "MainViewController")
+        self.present(MainViewController!, animated: true, completion: nil)
+    }
+    
+    fileprivate func showHouseTableViewController() {
+        let MainViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectHouseViewController")
         self.present(MainViewController!, animated: true, completion: nil)
     }
     

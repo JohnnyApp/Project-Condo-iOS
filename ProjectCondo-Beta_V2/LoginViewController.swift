@@ -52,7 +52,7 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func showHouseTableViewController() {
-        let MainViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectHouseViewController")
-        self.present(MainViewController!, animated: true, completion: nil)
+        let houseTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectHouseViewController")
+        self.present(houseTableViewController!, animated: true, completion: nil)
     }
 }

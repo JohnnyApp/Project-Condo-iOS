@@ -420,8 +420,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="pzE-bf-ixC">
-                        <barButtonItem key="leftBarButtonItem" title="Create" id="q30-nQ-wRC"/>
-                        <barButtonItem key="rightBarButtonItem" title="Request" id="26W-KH-zrI"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="7oR-Eb-VNS">
+                            <connections>
+                                <action selector="OpenCreateHouse:" destination="aM3-IF-PsN" id="tSm-HZ-RG6"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ccO-f2-ZaZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -431,7 +434,7 @@
         <!--Create a House-->
         <scene sceneID="N7F-uR-XxZ">
             <objects>
-                <viewController title="Create a House" id="O8R-Q0-CrV" customClass="CreateHouseViewController" customModule="ProjectCondo_Beta_V2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CreateHouseViewController" title="Create a House" id="O8R-Q0-CrV" customClass="CreateHouseViewController" customModule="ProjectCondo_Beta_V2" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="IAD-Y4-HE4"/>
                         <viewControllerLayoutGuide type="bottom" id="dyP-hP-Ymr"/>
@@ -487,6 +490,7 @@
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
+                                    <action selector="CreateAHouseInMongoDB:" destination="O8R-Q0-CrV" eventType="touchUpInside" id="Gg6-PD-YdH"/>
                                     <action selector="userReg:" destination="sqs-rM-IIc" eventType="touchUpInside" id="zce-qJ-qZS"/>
                                 </connections>
                             </button>
@@ -516,6 +520,14 @@
                             <constraint firstItem="IYv-nV-8EZ" firstAttribute="trailing" secondItem="NvD-rX-Ps9" secondAttribute="trailing" id="uZz-vU-tG9"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="Address1Txt" destination="Vmp-pJ-tbH" id="Fsy-dX-L5b"/>
+                        <outlet property="Address2Txt" destination="qxe-PY-NYp" id="O0X-96-va6"/>
+                        <outlet property="CityTxt" destination="EBq-l0-lYN" id="Noc-RS-zDJ"/>
+                        <outlet property="HouseNameTxt" destination="DfJ-eB-ukK" id="hNG-KA-f69"/>
+                        <outlet property="PostCodeTxt" destination="IYv-nV-8EZ" id="HiI-gk-YRI"/>
+                        <outlet property="StateTxt" destination="9bq-4c-67L" id="jMK-wC-Vla"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SEZ-Fb-uG3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

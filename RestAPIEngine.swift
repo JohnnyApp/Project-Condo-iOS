@@ -17,6 +17,8 @@ private let ApiKey = "0e72faf8133c347beec46d2204a96d3c1e025a328ebc9c0f3f2a2767bf
 private let BaseInstanceUrl = "http://localhost:8080/api/v2"                                    //Localhost
 private let UserRegisterExtension = "/user/register?login=true"
 private let UserLoginExtension = "/user/session"
+private let HomeTableExtension = "/mongodb/_table/home"
+private let UsersExtension = "/mongodb/_table/user"
 private let kSessionTokenKey = "SessionToken"
 //Server Setup Parameters +
 
@@ -57,6 +59,7 @@ final class RESTAPIEngine {
     }
     //Logout Function +
     
+    //Login Function -
     func loginEmail (_email: String, _password: String) -> String {
         
         let stringTxt = "{\"email\": \"" + _email + "\",\"password\": \"" + _password + "\"}"
@@ -166,6 +169,7 @@ final class RESTAPIEngine {
         
         return outputMsg
     }
+    //Register Function +
 
     func JSONParseDictionary(string: String) -> [String: AnyObject]{
         if let data = string.data(using: String.Encoding.utf8){
@@ -226,9 +230,42 @@ final class RESTAPIEngine {
     
     func createNewHouse (_housename: String, _address1: String, _address2: String, _city: String, _state: String, _postCode: String) -> String {
         
+        let stringTxt = "{\"resource\":[" + "{\"name\": \"" + _housename + "\",\"status\": \"" + "RENT" + "\",\"address\": \"" + _address1 + "\",\"address2\": \"" + _address2 + "\",\"city\": \"" + _city + "\",\"postalcode\": \"" + _postCode + "\",\"state\": \"" + _state + "\"}" + "]}"
+        var outputMsg = ""
         
+        let userDictionary = JSONParseDictionary(string: stringTxt)
         
-        return ""
+        HTTPPostJSON(url: BaseInstanceUrl + HomeTableExtension , jsonObj: userDictionary as AnyObject) {
+            (data: String, error: String?) -> Void in
+            if error != nil {
+                outputMsg = "servererror"
+            } else {
+                let outputDict = self.JSONParseDictionary(string: data)
+                
+                
+                //Check Errors -
+                if let error = outputDict["error"] as? [String : AnyObject] {
+                    if (error["message"] != nil) {
+                        outputMsg = error["message"] as! String
+                    }
+                }
+                //Check Errors +
+                
+                //Successful -
+                if outputMsg == "" {
+                    if (outputDict["session_token"] != nil) {
+                        print("Hit..")
+                        let defaults = UserDefaults.standard
+                        defaults.setValue(_housename, forKey: "CurrHouse")
+                        defaults.synchronize()
+                    }
+                    print("After Hit.")
+                }
+                //Successful +
+            }
+        }
+        sleep(2)
+        return outputMsg
     }
 }
 

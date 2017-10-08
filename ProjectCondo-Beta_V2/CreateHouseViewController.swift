@@ -49,7 +49,12 @@ class CreateHouseViewController: UIViewController {
         //Handle Address 2 +
         
         returnMsg = RESTAPIEngine.sharedEngine.createNewHouse(_housename: HouseNameTxt.text!, _address1: Address1Txt.text!, _address2: Add2Field, _city: CityTxt.text!, _state: StateTxt.text!, _postCode: PostCodeTxt.text!)
-        Alert.showAlertWithMessage("HIT MOTHER FUCKER!!!", fromViewController: self)
+        if returnMsg == "" {
+            Alert.showAlertWithMessage("Success!!!", fromViewController: self)
+        } else if returnMsg != "" {
+            Alert.showAlertWithMessage("ERROR!!!", fromViewController: self)
+            return
+        }
     }
     override func viewDidLoad() {
         super.viewDidLoad()

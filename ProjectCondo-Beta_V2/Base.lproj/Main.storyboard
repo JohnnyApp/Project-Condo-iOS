@@ -399,7 +399,7 @@
         <!--Select a House-->
         <scene sceneID="S5j-Ws-MTM">
             <objects>
-                <tableViewController title="Select a House" id="aM3-IF-PsN" customClass="HousesTableViewController" customModule="ProjectCondo_Beta_V2" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="HouseListTableViewController" title="Select a House" id="aM3-IF-PsN" customClass="HousesTableViewController" customModule="ProjectCondo_Beta_V2" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="b8G-TG-58K">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

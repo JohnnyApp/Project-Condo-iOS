@@ -254,12 +254,10 @@ final class RESTAPIEngine {
                 //Successful -
                 if outputMsg == "" {
                     if (outputDict["session_token"] != nil) {
-                        print("Hit..")
                         let defaults = UserDefaults.standard
                         defaults.setValue(_housename, forKey: "CurrHouse")
                         defaults.synchronize()
                     }
-                    print("After Hit.")
                 }
                 //Successful +
             }

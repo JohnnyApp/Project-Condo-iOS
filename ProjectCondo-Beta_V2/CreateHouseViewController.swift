@@ -51,11 +51,20 @@ class CreateHouseViewController: UIViewController {
         returnMsg = RESTAPIEngine.sharedEngine.createNewHouse(_housename: HouseNameTxt.text!, _address1: Address1Txt.text!, _address2: Add2Field, _city: CityTxt.text!, _state: StateTxt.text!, _postCode: PostCodeTxt.text!)
         if returnMsg == "" {
             Alert.showAlertWithMessage("Success!!!", fromViewController: self)
+            showHouseListViewController();
         } else if returnMsg != "" {
             Alert.showAlertWithMessage("ERROR!!!", fromViewController: self)
             return
         }
     }
+    
+    //Go to House List -
+    fileprivate func showHouseListViewController() {
+        let MainViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectHouseViewController")
+        self.present(MainViewController!, animated: true, completion: nil)
+    }
+    //Go to House List +
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -66,16 +75,4 @@ class CreateHouseViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

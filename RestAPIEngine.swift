@@ -9,6 +9,7 @@
 //import Foundation
 import UIKit
 import Foundation
+import SwiftyJSON
 
 //Server Setup Parameters -
 //private let ApiKey = "4be93293a709f0bbad4e5f6da89130c870889c34471ad9849ee8a74c52336c2a"       //Demo
@@ -231,9 +232,20 @@ final class RESTAPIEngine {
     func createNewHouse (_housename: String, _address1: String, _address2: String, _city: String, _state: String, _postCode: String) -> String {
         
         let stringTxt = "{\"resource\":[" + "{\"name\": \"" + _housename + "\",\"status\": \"" + "RENT" + "\",\"address\": \"" + _address1 + "\",\"address2\": \"" + _address2 + "\",\"city\": \"" + _city + "\",\"postalcode\": \"" + _postCode + "\",\"state\": \"" + _state + "\"}" + "]}"
+        
+        //let defaults = UserDefaults.standard
+        //let currEmail = defaults.string(forKey: "email")
+        
+        //let users =  "\"" + "tenants\"" + ": [ \"" + "\"" + currEmail +"\""+"]"
+
+        //let stringTxt = "{\"resource\":[" + "{\"name\": \"" + _housename + "\",\"status\": \"" + "RENT" + "\",\"address\": \"" + _address1 + "\",\"address2\": \"" + _address2 + "\",\"city\": \"" + _city + "\",\"postalcode\": \"" + _postCode + "\",\"state\": \"" + _state + "\"," + users + "}" + "]}"
         var outputMsg = ""
         
+        print("STRING TEXT:" + stringTxt)
+        
         let userDictionary = JSONParseDictionary(string: stringTxt)
+        
+        
         
         HTTPPostJSON(url: BaseInstanceUrl + HomeTableExtension , jsonObj: userDictionary as AnyObject) {
             (data: String, error: String?) -> Void in

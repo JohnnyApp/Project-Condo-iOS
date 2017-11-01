@@ -233,15 +233,18 @@ final class RESTAPIEngine {
         
         let stringTxt = "{\"resource\":[" + "{\"name\": \"" + _housename + "\",\"status\": \"" + "RENT" + "\",\"address\": \"" + _address1 + "\",\"address2\": \"" + _address2 + "\",\"city\": \"" + _city + "\",\"postalcode\": \"" + _postCode + "\",\"state\": \"" + _state + "\"}" + "]}"
         
-        //let defaults = UserDefaults.standard
-        //let currEmail = defaults.string(forKey: "email")
-        
-        //let users =  "\"" + "tenants\"" + ": [ \"" + "\"" + currEmail +"\""+"]"
-
-        //let stringTxt = "{\"resource\":[" + "{\"name\": \"" + _housename + "\",\"status\": \"" + "RENT" + "\",\"address\": \"" + _address1 + "\",\"address2\": \"" + _address2 + "\",\"city\": \"" + _city + "\",\"postalcode\": \"" + _postCode + "\",\"state\": \"" + _state + "\"," + users + "}" + "]}"
         var outputMsg = ""
         
-        print("STRING TEXT:" + stringTxt)
+        //SwiftyJSON -
+        var homeJSON: JSON = [:]
+        homeJSON["name"] = _housename as AnyObject?
+        homeJSON["status"] = "RENT" as AnyObject?
+        homeJSON["address1"] = _address1 as AnyObject?
+        homeJSON["address2"] = _address2 as AnyObject?
+        homeJSON["city"] = _city as AnyObject?
+        homeJSON["postalcode"] = _postCode as AnyObject?
+        homeJSON["state"] = _state as AnyObject?
+        //SwiftyJSON +
         
         let userDictionary = JSONParseDictionary(string: stringTxt)
         

@@ -53,6 +53,7 @@ class CreateHouseViewController: UIViewController {
             Alert.showAlertWithMessage("Success!!!", fromViewController: self)
             showHouseListViewController();
         } else if returnMsg != "" {
+            print("Error: " + returnMsg)
             Alert.showAlertWithMessage("ERROR!!!", fromViewController: self)
             return
         }

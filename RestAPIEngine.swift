@@ -231,11 +231,17 @@ final class RESTAPIEngine {
     
     func createNewHouse (_housename: String, _address1: String, _address2: String, _city: String, _state: String, _postCode: String) -> String {
         
-        let stringTxt = "{\"resource\":[" + "{\"name\": \"" + _housename + "\",\"status\": \"" + "RENT" + "\",\"address\": \"" + _address1 + "\",\"address2\": \"" + _address2 + "\",\"city\": \"" + _city + "\",\"postalcode\": \"" + _postCode + "\",\"state\": \"" + _state + "\"}" + "]}"
+        //let stringTxt = "{\"resource\":[" + "{\"name\": \"" + _housename + "\",\"status\": \"" + "RENT" + "\",\"address\": \"" + _address1 + "\",\"address2\": \"" + _address2 + "\",\"city\": \"" + _city + "\",\"postalcode\": \"" + _postCode + "\",\"state\": \"" + _state + "\"}" + "]}"
         
         var outputMsg = ""
         
         //SwiftyJSON -
+        var userJSON1: JSON = [:]
+        userJSON1["email"] = "jonathan.laroco@yahoo.com" as AnyObject?
+        
+        var userJSON2: JSON = [:]
+        userJSON2["email"] = "j_laroco@yahoo.com" as AnyObject?
+        
         var homeJSON: JSON = [:]
         homeJSON["name"] = _housename as AnyObject?
         homeJSON["status"] = "RENT" as AnyObject?
@@ -244,11 +250,14 @@ final class RESTAPIEngine {
         homeJSON["city"] = _city as AnyObject?
         homeJSON["postalcode"] = _postCode as AnyObject?
         homeJSON["state"] = _state as AnyObject?
+        
+        let resourceJSON: JSON = ["resource": homeJSON as AnyObject]
+        
+        //homeJSON["users"] = [userJSON1,userJSON2]
         //SwiftyJSON +
         
-        let userDictionary = JSONParseDictionary(string: stringTxt)
-        
-        
+        //let userDictionary = JSONParseDictionary(string: stringTxt)
+        let userDictionary = resourceJSON
         
         HTTPPostJSON(url: BaseInstanceUrl + HomeTableExtension , jsonObj: userDictionary as AnyObject) {
             (data: String, error: String?) -> Void in
@@ -265,7 +274,7 @@ final class RESTAPIEngine {
                     }
                 }
                 //Check Errors +
-                
+             
                 //Successful -
                 if outputMsg == "" {
                     if (outputDict["session_token"] != nil) {

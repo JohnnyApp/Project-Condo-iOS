@@ -63,10 +63,15 @@ final class RESTAPIEngine {
     //Login Function -
     func loginEmail (_email: String, _password: String) -> String {
         
-        let stringTxt = "{\"email\": \"" + _email + "\",\"password\": \"" + _password + "\"}"
+        //let stringTxt = "{\"email\": \"" + _email + "\",\"password\": \"" + _password + "\"}"
         var outputMsg = ""
         
-        let userDictionary = JSONParseDictionary(string: stringTxt)
+        var loginJSON: JSON = [:]
+        loginJSON["email"] = _email as AnyObject?
+        loginJSON["password"] = _password as AnyObject?
+        
+        //let userDictionary = JSONParseDictionary(string: stringTxt)
+        let userDictionary = loginJSON
         
         HTTPPostJSON(url: BaseInstanceUrl + UserLoginExtension , jsonObj: userDictionary as AnyObject) {
             (data: String, error: String?) -> Void in
@@ -114,10 +119,22 @@ final class RESTAPIEngine {
     //Register Function -
     func registerWithEmail (_firstname: String, _lastname: String, _username: String, _password: String, _email: String, _phoneNo: String) -> String {
         
-        let stringTxt = "{\"first_name\": \"" + _firstname + "\",\"last_name\": \"" + _lastname + "\",\"username\": \"" + _username + "\",\"email\": \"" + _email + "\",\"phone\": \"" + _phoneNo + "\",\"password\": \"" + _password + "\"}"
+        //let stringTxt = "{\"first_name\": \"" + _firstname + "\",\"last_name\": \"" + _lastname + "\",\"username\": \"" + _username + "\",\"email\": \"" + _email + "\",\"phone\": \"" + _phoneNo + "\",\"password\": \"" + _password + "\"}"
         var outputMsg = ""
         
-        let userDictionary = JSONParseDictionary(string: stringTxt)
+        var registerJSON: JSON = [:]
+        registerJSON["first_name"] = _firstname as AnyObject?
+        registerJSON["last_name"] = _lastname as AnyObject?
+        registerJSON["username"] = _username as AnyObject?
+        registerJSON["email"] = _email as AnyObject?
+        registerJSON["phone"] = _phoneNo as AnyObject?
+        registerJSON["password"] = _password as AnyObject?
+        
+        //let userDictionary = JSONParseDictionary(string: stringTxt)
+        let resourceJSON: JSON = ["resource": registerJSON as AnyObject]
+        let userDictionary = resourceJSON
+        
+        
         
         HTTPPostJSON(url: BaseInstanceUrl + UserRegisterExtension , jsonObj: userDictionary as AnyObject) {
             (data: String, error: String?) -> Void in
@@ -250,6 +267,7 @@ final class RESTAPIEngine {
         homeJSON["city"] = _city as AnyObject?
         homeJSON["postalcode"] = _postCode as AnyObject?
         homeJSON["state"] = _state as AnyObject?
+        homeJSON["users"] = userJSON1 as AnyObject?
         
         let resourceJSON: JSON = ["resource": homeJSON as AnyObject]
         

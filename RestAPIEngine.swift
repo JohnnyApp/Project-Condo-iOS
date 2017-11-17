@@ -63,14 +63,12 @@ final class RESTAPIEngine {
     //Login Function -
     func loginEmail (_email: String, _password: String) -> String {
         
-        //let stringTxt = "{\"email\": \"" + _email + "\",\"password\": \"" + _password + "\"}"
         var outputMsg = ""
         
         var loginJSON: JSON = [:]
         loginJSON["email"] = _email as AnyObject?
         loginJSON["password"] = _password as AnyObject?
         
-        //let userDictionary = JSONParseDictionary(string: stringTxt)
         let userDictionary = loginJSON
         
         HTTPPostJSON(url: BaseInstanceUrl + UserLoginExtension , jsonObj: userDictionary as AnyObject) {
@@ -119,7 +117,6 @@ final class RESTAPIEngine {
     //Register Function -
     func registerWithEmail (_firstname: String, _lastname: String, _username: String, _password: String, _email: String, _phoneNo: String) -> String {
         
-        //let stringTxt = "{\"first_name\": \"" + _firstname + "\",\"last_name\": \"" + _lastname + "\",\"username\": \"" + _username + "\",\"email\": \"" + _email + "\",\"phone\": \"" + _phoneNo + "\",\"password\": \"" + _password + "\"}"
         var outputMsg = ""
         
         var registerJSON: JSON = [:]
@@ -130,7 +127,6 @@ final class RESTAPIEngine {
         registerJSON["phone"] = _phoneNo as AnyObject?
         registerJSON["password"] = _password as AnyObject?
         
-        //let userDictionary = JSONParseDictionary(string: stringTxt)
         let resourceJSON: JSON = ["resource": registerJSON as AnyObject]
         let userDictionary = resourceJSON
         
@@ -248,14 +244,11 @@ final class RESTAPIEngine {
     
     func createNewHouse (_housename: String, _address1: String, _address2: String, _city: String, _state: String, _postCode: String) -> String {
         
-        //let stringTxt = "{\"resource\":[" + "{\"name\": \"" + _housename + "\",\"status\": \"" + "RENT" + "\",\"address\": \"" + _address1 + "\",\"address2\": \"" + _address2 + "\",\"city\": \"" + _city + "\",\"postalcode\": \"" + _postCode + "\",\"state\": \"" + _state + "\"}" + "]}"
-        
         var outputMsg = ""
         
         //SwiftyJSON -
         var userJSON1: JSON = [:]
         userJSON1["email"] = UserDefaults.standard.string(forKey: "email") as AnyObject?
-        //userJSON1["email"] = "j_laroco@yahoo.com" as AnyObject?
         
         var homeJSON: JSON = [:]
         homeJSON["name"] = _housename as AnyObject?
@@ -268,11 +261,8 @@ final class RESTAPIEngine {
         homeJSON["users"] = userJSON1 as AnyObject?
         
         let resourceJSON: JSON = ["resource": homeJSON as AnyObject]
-        
-        //homeJSON["users"] = [userJSON1,userJSON2]
         //SwiftyJSON +
         
-        //let userDictionary = JSONParseDictionary(string: stringTxt)
         let userDictionary = resourceJSON
         
         HTTPPostJSON(url: BaseInstanceUrl + HomeTableExtension , jsonObj: userDictionary as AnyObject) {

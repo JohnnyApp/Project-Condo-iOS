@@ -254,10 +254,8 @@ final class RESTAPIEngine {
         
         //SwiftyJSON -
         var userJSON1: JSON = [:]
-        userJSON1["email"] = "jonathan.laroco@yahoo.com" as AnyObject?
-        
-        var userJSON2: JSON = [:]
-        userJSON2["email"] = "j_laroco@yahoo.com" as AnyObject?
+        userJSON1["email"] = UserDefaults.standard.string(forKey: "email") as AnyObject?
+        //userJSON1["email"] = "j_laroco@yahoo.com" as AnyObject?
         
         var homeJSON: JSON = [:]
         homeJSON["name"] = _housename as AnyObject?

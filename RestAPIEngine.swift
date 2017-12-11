@@ -19,7 +19,7 @@ private let BaseInstanceUrl = "http://localhost:8080/api/v2"                    
 private let UserRegisterExtension = "/user/register?login=true"
 private let UserLoginExtension = "/user/session"
 private let HomeTableExtension = "/mongodb/_table/home"
-private let UsersExtension = "/mongodb/_table/user"
+private let UserHomeRelationExtension = "/mongodb/_table/userhomerelation"
 private let kSessionTokenKey = "SessionToken"
 //Server Setup Parameters +
 
@@ -130,8 +130,6 @@ final class RESTAPIEngine {
         let resourceJSON: JSON = ["resource": registerJSON as AnyObject]
         let userDictionary = resourceJSON
         
-        
-        
         HTTPPostJSON(url: BaseInstanceUrl + UserRegisterExtension , jsonObj: userDictionary as AnyObject) {
             (data: String, error: String?) -> Void in
             if error != nil {
@@ -185,6 +183,104 @@ final class RESTAPIEngine {
     }
     //Register Function +
 
+    
+    //Create new house -
+    func createNewHouse (_housename: String, _address1: String, _address2: String, _city: String, _state: String, _postCode: String) -> String {
+        
+        var outputMsg = ""
+        
+        //SwiftyJSON -
+        var userJSON1: JSON = [:]
+        userJSON1["email"] = UserDefaults.standard.string(forKey: "email") as AnyObject?
+        
+        var homeJSON: JSON = [:]
+        homeJSON["name"] = _housename as AnyObject?
+        homeJSON["status"] = "RENT" as AnyObject?
+        homeJSON["address1"] = _address1 as AnyObject?
+        homeJSON["address2"] = _address2 as AnyObject?
+        homeJSON["city"] = _city as AnyObject?
+        homeJSON["postalcode"] = _postCode as AnyObject?
+        homeJSON["state"] = _state as AnyObject?
+        homeJSON["users"] = userJSON1 as AnyObject?
+        
+        let resourceJSON: JSON = ["resource": homeJSON as AnyObject]
+        //SwiftyJSON +
+        
+        let userDictionary = resourceJSON
+        
+        HTTPPostJSON(url: BaseInstanceUrl + HomeTableExtension , jsonObj: userDictionary as AnyObject) {
+            (data: String, error: String?) -> Void in
+            if error != nil {
+                outputMsg = "servererror"
+            } else {
+                let outputDict = self.JSONParseDictionary(string: data)
+                
+                
+                //Check Errors -
+                if let error = outputDict["error"] as? [String : AnyObject] {
+                    if (error["message"] != nil) {
+                        outputMsg = error["message"] as! String
+                    }
+                }
+                //Check Errors +
+                
+                //Successful -
+                if outputMsg == "" {
+                    if (outputDict["session_token"] != nil) {
+                        let defaults = UserDefaults.standard
+                        defaults.setValue(_housename, forKey: "CurrHouse")
+                        defaults.synchronize()
+                    }
+                }
+                //Successful +
+            }
+        }
+        sleep(2)
+        
+        //TEST -
+        let useremail = UserDefaults.standard.string(forKey: "email") as AnyObject?
+        outputMsg = addUserHomeRelation(_useremail: useremail as! String,_housename: _housename);
+        //TEST +
+        
+        return outputMsg
+    }
+    //Create new house +
+    
+    //Update User Customizations -
+    func addUserHomeRelation (_useremail: String, _housename: String) -> String {
+        var outputMsg = ""
+        
+        var userJSON: JSON = [:]
+        userJSON["useremail"] = _useremail as AnyObject?
+        userJSON["homename"] = _housename as AnyObject?
+        
+        let resourceJSON: JSON = ["resource": userJSON as AnyObject]
+        
+        let userDictionary = resourceJSON
+        
+        HTTPPostJSON(url: BaseInstanceUrl + UserHomeRelationExtension , jsonObj: userDictionary as AnyObject) {
+            (data: String, error: String?) -> Void in
+            if error != nil {
+                outputMsg = "servererror"
+            } else {
+                let outputDict = self.JSONParseDictionary(string: data)
+                
+                
+                //Check Errors -
+                if let error = outputDict["error"] as? [String : AnyObject] {
+                    if (error["message"] != nil) {
+                        outputMsg = error["message"] as! String
+                    }
+                }
+                //Check Errors +
+            }
+        }
+        sleep(2)
+        
+        return outputMsg
+    }
+    //Update User Customizations +
+
     func JSONParseDictionary(string: String) -> [String: AnyObject]{
         if let data = string.data(using: String.Encoding.utf8){
             do{
@@ -224,6 +320,7 @@ final class RESTAPIEngine {
         request.httpBody = data as Data
         HTTPsendRequest(request: request,callback: callback)
     }
+
     
     func JSONStringify(value: AnyObject,prettyPrinted:Bool = false) -> String{
         let options = prettyPrinted ? JSONSerialization.WritingOptions.prettyPrinted : JSONSerialization.WritingOptions(rawValue: 0)
@@ -240,60 +337,6 @@ final class RESTAPIEngine {
             }
         }
         return ""
-    }
-    
-    func createNewHouse (_housename: String, _address1: String, _address2: String, _city: String, _state: String, _postCode: String) -> String {
-        
-        var outputMsg = ""
-        
-        //SwiftyJSON -
-        var userJSON1: JSON = [:]
-        userJSON1["email"] = UserDefaults.standard.string(forKey: "email") as AnyObject?
-        
-        var homeJSON: JSON = [:]
-        homeJSON["name"] = _housename as AnyObject?
-        homeJSON["status"] = "RENT" as AnyObject?
-        homeJSON["address1"] = _address1 as AnyObject?
-        homeJSON["address2"] = _address2 as AnyObject?
-        homeJSON["city"] = _city as AnyObject?
-        homeJSON["postalcode"] = _postCode as AnyObject?
-        homeJSON["state"] = _state as AnyObject?
-        homeJSON["users"] = userJSON1 as AnyObject?
-        
-        let resourceJSON: JSON = ["resource": homeJSON as AnyObject]
-        //SwiftyJSON +
-        
-        let userDictionary = resourceJSON
-        
-        HTTPPostJSON(url: BaseInstanceUrl + HomeTableExtension , jsonObj: userDictionary as AnyObject) {
-            (data: String, error: String?) -> Void in
-            if error != nil {
-                outputMsg = "servererror"
-            } else {
-                let outputDict = self.JSONParseDictionary(string: data)
-                
-                
-                //Check Errors -
-                if let error = outputDict["error"] as? [String : AnyObject] {
-                    if (error["message"] != nil) {
-                        outputMsg = error["message"] as! String
-                    }
-                }
-                //Check Errors +
-             
-                //Successful -
-                if outputMsg == "" {
-                    if (outputDict["session_token"] != nil) {
-                        let defaults = UserDefaults.standard
-                        defaults.setValue(_housename, forKey: "CurrHouse")
-                        defaults.synchronize()
-                    }
-                }
-                //Successful +
-            }
-        }
-        sleep(2)
-        return outputMsg
     }
 }
 

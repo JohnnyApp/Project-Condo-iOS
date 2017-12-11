@@ -246,7 +246,7 @@ final class RESTAPIEngine {
     }
     //Create new house +
     
-    //Update User Customizations -
+    //Add User/Home Relation -
     func addUserHomeRelation (_useremail: String, _housename: String) -> String {
         var outputMsg = ""
         
@@ -279,7 +279,7 @@ final class RESTAPIEngine {
         
         return outputMsg
     }
-    //Update User Customizations +
+    //Add User/Home Relation +
 
     func JSONParseDictionary(string: String) -> [String: AnyObject]{
         if let data = string.data(using: String.Encoding.utf8){
@@ -331,7 +331,6 @@ final class RESTAPIEngine {
                     return string as String
                 }
             }catch {
-                
                 print("error")
                 //Access error here
             }

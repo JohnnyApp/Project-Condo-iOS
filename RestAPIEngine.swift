@@ -16,12 +16,9 @@ import SwiftyJSON
 private let ApiKey = "0e72faf8133c347beec46d2204a96d3c1e025a328ebc9c0f3f2a2767bf5d5d4f"         //Localhost
 //private let BaseInstanceUrl = "http://ec2-52-37-95-16.us-west-2.compute.amazonaws.com/api/v2" //Demo
 private let BaseInstanceUrl = "http://localhost:8080/api/v2"                                    //Localhost
-private let UserRegisterExtension = "/user/register?login=true"
-private let UserLoginExtension = "/user/session"
-private let HomeTableExtension = "/mongodb/_table/home"
-private let UserHomeRelationExtension = "/mongodb/_table/userhomerelation"
 private let kSessionTokenKey = "SessionToken"
-private let DbServiceName = "db/_table"
+//private let DbServiceName = "db/_table"
+private let DbServiceName = "mongodb/_table"
 private let ContainerName = "profile_images"
 //Server Setup Parameters +
 
@@ -148,6 +145,9 @@ final class RESTAPIEngine {
                                                 "username": username as AnyObject]
         
         callApi(Routing.user(resourseName: "register").path, method: "POST", queryParams: queryParams, body: requestBody as AnyObject?, headerParams: headerParams, success: success, failure: failure)
+        sleep(2)
+        let userRequestBody: [String: AnyObject] = ["resource": requestBody as AnyObject]
+        callApi(Routing.service(tableName: "user").path, method: "POST", queryParams: nil, body: userRequestBody as AnyObject?, headerParams: sessionHeaderParams, success: success, failure: failure)
     }
     //Register Function 2 +
     

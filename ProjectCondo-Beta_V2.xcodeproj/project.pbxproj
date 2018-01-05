@@ -24,8 +24,10 @@
 		DF6E83331EF7960B009CF79E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6E83321EF7960B009CF79E /* LoginViewController.swift */; };
 		DF6E83351EF7975E009CF79E /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6E83341EF7975E009CF79E /* RegisterViewController.swift */; };
 		DF6E83381EF7A3AC009CF79E /* RestAPIEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6E83371EF7A3AC009CF79E /* RestAPIEngine.swift */; };
+		DFD94C581FFF2D15004D3DEC /* NIKApiInvoker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD94C571FFF2D15004D3DEC /* NIKApiInvoker.swift */; };
+		DFD94C5A1FFF2D5A004D3DEC /* NIKFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD94C591FFF2D5A004D3DEC /* NIKFile.swift */; };
+		DFD94C5C1FFF3D6F004D3DEC /* Test1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD94C5B1FFF3D6F004D3DEC /* Test1ViewController.swift */; };
 		DFDE3E731F1ACF95003F3F99 /* WhiteBoardTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDE3E721F1ACF95003F3F99 /* WhiteBoardTableViewController.swift */; };
-		DFDE3E771F1AFF82003F3F99 /* Test1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDE3E761F1AFF82003F3F99 /* Test1ViewController.swift */; };
 		DFF089501F3E4BA5001C9262 /* CreateHouseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF0894F1F3E4BA5001C9262 /* CreateHouseViewController.swift */; };
 		DFF089521F3E4DA6001C9262 /* HousesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF089511F3E4DA6001C9262 /* HousesTableViewController.swift */; };
 /* End PBXBuildFile section */
@@ -76,8 +78,10 @@
 		DF6E83321EF7960B009CF79E /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		DF6E83341EF7975E009CF79E /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		DF6E83371EF7A3AC009CF79E /* RestAPIEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RestAPIEngine.swift; path = ../RestAPIEngine.swift; sourceTree = "<group>"; };
+		DFD94C571FFF2D15004D3DEC /* NIKApiInvoker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NIKApiInvoker.swift; sourceTree = "<group>"; };
+		DFD94C591FFF2D5A004D3DEC /* NIKFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NIKFile.swift; sourceTree = "<group>"; };
+		DFD94C5B1FFF3D6F004D3DEC /* Test1ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Test1ViewController.swift; sourceTree = "<group>"; };
 		DFDE3E721F1ACF95003F3F99 /* WhiteBoardTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WhiteBoardTableViewController.swift; path = ../WhiteBoardTableViewController.swift; sourceTree = "<group>"; };
-		DFDE3E761F1AFF82003F3F99 /* Test1ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Test1ViewController.swift; path = ../Test1ViewController.swift; sourceTree = "<group>"; };
 		DFF0894F1F3E4BA5001C9262 /* CreateHouseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateHouseViewController.swift; sourceTree = "<group>"; };
 		DFF089511F3E4DA6001C9262 /* HousesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HousesTableViewController.swift; sourceTree = "<group>"; };
 		EE07AFDE7D45D121E36BF492 /* Pods-ProjectCondo-Beta_V2Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectCondo-Beta_V2Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ProjectCondo-Beta_V2Tests/Pods-ProjectCondo-Beta_V2Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -217,7 +221,7 @@
 				DF6E83321EF7960B009CF79E /* LoginViewController.swift */,
 				DF6E83341EF7975E009CF79E /* RegisterViewController.swift */,
 				DFDE3E721F1ACF95003F3F99 /* WhiteBoardTableViewController.swift */,
-				DFDE3E761F1AFF82003F3F99 /* Test1ViewController.swift */,
+				DFD94C5B1FFF3D6F004D3DEC /* Test1ViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -226,6 +230,8 @@
 			isa = PBXGroup;
 			children = (
 				DF6E83371EF7A3AC009CF79E /* RestAPIEngine.swift */,
+				DFD94C571FFF2D15004D3DEC /* NIKApiInvoker.swift */,
+				DFD94C591FFF2D5A004D3DEC /* NIKFile.swift */,
 			);
 			name = "REST Engine";
 			sourceTree = "<group>";
@@ -525,16 +531,18 @@
 			files = (
 				DF6E83381EF7A3AC009CF79E /* RestAPIEngine.swift in Sources */,
 				DF6E83071EF794ED009CF79E /* SecondViewController.swift in Sources */,
-				DFDE3E771F1AFF82003F3F99 /* Test1ViewController.swift in Sources */,
 				DF6E83351EF7975E009CF79E /* RegisterViewController.swift in Sources */,
 				DF5FA4C31F0093E800738B49 /* CustomNavBar.swift in Sources */,
+				DFD94C5A1FFF2D5A004D3DEC /* NIKFile.swift in Sources */,
 				DFF089521F3E4DA6001C9262 /* HousesTableViewController.swift in Sources */,
+				DFD94C5C1FFF3D6F004D3DEC /* Test1ViewController.swift in Sources */,
 				DF6E83031EF794ED009CF79E /* AppDelegate.swift in Sources */,
 				DF6E83051EF794ED009CF79E /* FirstViewController.swift in Sources */,
 				DFDE3E731F1ACF95003F3F99 /* WhiteBoardTableViewController.swift in Sources */,
 				DF05A0121EFA3E9500232A0B /* GroupRecord.swift in Sources */,
 				DFF089501F3E4BA5001C9262 /* CreateHouseViewController.swift in Sources */,
 				DF5FA4C11F00921500738B49 /* UserInterface.swift in Sources */,
+				DFD94C581FFF2D15004D3DEC /* NIKApiInvoker.swift in Sources */,
 				DF6E83331EF7960B009CF79E /* LoginViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

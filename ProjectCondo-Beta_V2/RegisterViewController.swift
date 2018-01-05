@@ -19,7 +19,6 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var confirmPasswordTxt: UITextField!
     
     @IBAction func userReg(_ sender: Any) {
-        
         //Make sure everything is filled out -
         if ((firstNameTxt.text?.isEmpty) != false) {
             Alert.showAlertWithMessage("Please fill out your first name", fromViewController: self)
@@ -57,28 +56,23 @@ class RegisterViewController: UIViewController {
         
         //Make sure everything is filled out +
         
-        var returnMsg = ""
-        returnMsg = RESTAPIEngine.sharedEngine.registerWithEmail(_firstname: firstNameTxt.text!, _lastname: lastNameTxt.text!, _username: usernameTxt.text!, _password: passwordTxt.text!, _email: emailTxt.text!, _phoneNo: phoneNoTxt.text!)
-        
-        if returnMsg == "" {
-            Alert.showAlertWithMessage("Thanks for signing up!", fromViewController: self)
-            showHouseTableViewController()
-        } else if returnMsg == "servererror" {
-            Alert.showAlertWithMessage("Sorry! Please try again later.", fromViewController: self)
-            return
-        } else if returnMsg == "The email has already been taken." {
-            Alert.showAlertWithMessage("Email has already been registered.", fromViewController: self)
-            return
-        } else if returnMsg == "The email must be a valid email address." {
-            Alert.showAlertWithMessage("Please enter a valid email address.", fromViewController: self)
-            return
-        } else if returnMsg == "The username has already been taken." {
-            Alert.showAlertWithMessage("The username has already been registered.", fromViewController: self)
-            return
-        }else {
-            Alert.showAlertWithMessage(returnMsg, fromViewController: self)
-            return
-        }
+        RESTAPIEngine.sharedEngine.registerWithEmail2(emailTxt.text!, password: passwordTxt.text!, firstname: firstNameTxt.text!, lastname: lastNameTxt.text!, username: usernameTxt.text!, phoneno: phoneNoTxt.text!, success: { response in
+            RESTAPIEngine.sharedEngine.sessionToken = response!["session_token"] as? String
+            let defaults = UserDefaults.standard
+            defaults.setValue(self.emailTxt.text!, forKey: kUserEmail)
+            defaults.setValue(self.usernameTxt.text!, forKey: kUserName)
+            defaults.setValue(self.passwordTxt.text!, forKey: kPassword)
+            defaults.synchronize()
+            
+            DispatchQueue.main.async {
+                self.showHouseTableViewController()
+            }
+        }, failure: { error in
+            NSLog("Error registering new user: \(error)")
+            DispatchQueue.main.async {
+                Alert.showAlertWithMessage(error.errorMessage, fromViewController: self)
+            }
+        })
     }
     
     fileprivate func showMainViewController() {

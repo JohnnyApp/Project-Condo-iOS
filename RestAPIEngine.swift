@@ -21,10 +21,60 @@ private let UserLoginExtension = "/user/session"
 private let HomeTableExtension = "/mongodb/_table/home"
 private let UserHomeRelationExtension = "/mongodb/_table/userhomerelation"
 private let kSessionTokenKey = "SessionToken"
+private let DbServiceName = "db/_table"
+private let ContainerName = "profile_images"
 //Server Setup Parameters +
+
+//Defaults -
+let kUserEmail = "UserEmail"
+let kUserName = "UserName"
+let kPassword = "UserPassword"
+//Defaults +
 
 typealias SuccessClosure = (JSON?) -> Void
 typealias ErrorClosure = (NSError) -> Void
+
+//Error -
+extension NSError {
+    var errorMessage: String {
+        //Need to Fix Later -
+        /*if let errorMessage = self.userInfo["error"]?["message"] as? String {
+         return errorMessage
+         }*/
+        //Need to Fix Later +
+        return "Unknown error occurred"
+    }
+}
+//Error +
+
+//Routings -
+enum Routing {
+    case user(resourseName: String)
+    case service(tableName: String)
+    case resourceFolder(folderPath: String)
+    case resourceFile(folderPath: String, fileName: String)
+    
+    var path: String {
+        switch self {
+        //rest path for request, form is <base instance url>/api/v2/user/resourceName
+        case let .user(resourceName):
+            return "\(BaseInstanceUrl)/user/\(resourceName)"
+            
+        //rest path for request, form is <base instance url>/api/v2/<serviceName>/<tableName>
+        case let .service(tableName):
+            return "\(BaseInstanceUrl)/\(DbServiceName)/\(tableName)"
+            
+        // rest path for request, form is <base instance url>/api/v2/files/container/<folder path>/
+        case let .resourceFolder(folderPath):
+            return "\(BaseInstanceUrl)/files/\(ContainerName)/\(folderPath)/"
+            
+        //rest path for request, form is <base instance url>/api/v2/files/container/<folder path>/filename
+        case let .resourceFile(folderPath, fileName):
+            return "\(BaseInstanceUrl)/files/\(ContainerName)/\(folderPath)/\(fileName)"
+        }
+    }
+}
+//Routings +
 
 final class RESTAPIEngine {
     
@@ -60,128 +110,56 @@ final class RESTAPIEngine {
     }
     //Logout Function +
     
-    //Login Function -
-    func loginEmail (_email: String, _password: String) -> String {
+    //Login Function 2 -
+    func loginWithEmail2(_ email: String, password: String, success: @escaping SuccessClosure, failure: @escaping ErrorClosure) {
         
-        var outputMsg = ""
+        let requestBody: [String: AnyObject] = ["email": email as AnyObject,
+                                                "password": password as AnyObject]
         
-        var loginJSON: JSON = [:]
-        loginJSON["email"] = _email as AnyObject?
-        loginJSON["password"] = _password as AnyObject?
-        
-        let userDictionary = loginJSON
-        
-        HTTPPostJSON(url: BaseInstanceUrl + UserLoginExtension , jsonObj: userDictionary as AnyObject) {
-            (data: String, error: String?) -> Void in
-
-            if error != nil {
-                outputMsg = "servererror"
-            } else {
-                let outputDict = self.JSONParseDictionary(string: data)
-                
-                //Check Errors -
-                if let error = outputDict["error"] as? [String : AnyObject] {
-                    if (error["message"] != nil) {
-                        outputMsg = error["message"] as! String
-                    }
-                }
-                //Check Errors +
-                
-                //Successful -
-                if outputMsg == "" {
-                    if (outputDict["session_token"] != nil) {
-                        self.sessionToken = outputDict["session_token"] as? String
-                        let defaults = UserDefaults.standard
-                        defaults.setValue(_email, forKey: "email")
-                        
-                        if (outputDict["first_name"] != nil) {
-                            defaults.setValue(outputDict["first_name"] as? String, forKey:"firstname")
-                        }
-                        if (outputDict["last_name"] != nil) {
-                            defaults.setValue(outputDict["last_name"] as? String, forKey:"lastname")
-                        }
-                        //Set Username
-                        defaults.synchronize()
-                    }
-                }
-                //Successful +
-                
-                
-            }
-        }
-        sleep(2)
-        return outputMsg
+        callApi(Routing.user(resourseName: "session").path, method: "POST", queryParams: nil, body: requestBody as AnyObject?, headerParams: headerParams, success: success, failure: failure)
     }
-    //Login Function +
+    //Login Function 2 +
     
-    //Register Function -
-    func registerWithEmail (_firstname: String, _lastname: String, _username: String, _password: String, _email: String, _phoneNo: String) -> String {
+    //Register Function 2 -
+    func registerWithEmail2(_ email: String, password: String, firstname: String, lastname: String, username: String, phoneno: String, success: @escaping SuccessClosure, failure: @escaping ErrorClosure) {
         
-        var outputMsg = ""
+        //login after signup
+        let queryParams: [String: AnyObject] = ["login": "1" as AnyObject]
+        let requestBody: [String: AnyObject] = ["email": email as AnyObject,
+                                                "password": password as AnyObject,
+                                                "first_name": firstname as AnyObject,
+                                                "last_name": lastname as AnyObject,
+                                                "phone": phoneno as AnyObject,
+                                                "username": username as AnyObject]
         
-        var registerJSON: JSON = [:]
-        registerJSON["first_name"] = _firstname as AnyObject?
-        registerJSON["last_name"] = _lastname as AnyObject?
-        registerJSON["username"] = _username as AnyObject?
-        registerJSON["email"] = _email as AnyObject?
-        registerJSON["phone"] = _phoneNo as AnyObject?
-        registerJSON["password"] = _password as AnyObject?
-        
-        let resourceJSON: JSON = ["resource": registerJSON as AnyObject]
-        let userDictionary = resourceJSON
-        
-        HTTPPostJSON(url: BaseInstanceUrl + UserRegisterExtension , jsonObj: userDictionary as AnyObject) {
-            (data: String, error: String?) -> Void in
-            if error != nil {
-                outputMsg = "servererror"
-            } else {
-                
-                let outputDict = self.JSONParseDictionary(string: data)
-                
-                //Check Errors -
-                if let error = outputDict["error"] as? [String : AnyObject] {
-                    if let context = error["context"] as? [String : AnyObject] {
-                        
-                        var errArray = [String]()
-                        
-                        if (context["email"] != nil) {
-                            errArray += context["email"] as! [String]
-                        } else if (context["username"] != nil) {
-                            errArray += context["username"] as! [String]
-                        }
-                        outputMsg = errArray[0]
-                    }
-                }
-                //Check Errors +
-                
-                print("Output message" + outputMsg)
-                print(data)
-                
-                //Successful create a new session -
-                if outputMsg == "" {
-                    //var sessArray = [String]()
-                    
-                    if (outputDict["session_token"] != nil) {
-                        //Add Session Token/User Defaults -
-                        print(outputDict["session_token"] as? String ?? "NOTHING")
-                        self.sessionToken = outputDict["session_token"] as? String
-                        let defaults = UserDefaults.standard
-                        defaults.setValue(_username, forKey: "username")
-                        defaults.setValue(_email, forKey: "email")
-                        defaults.setValue(_firstname, forKey:"firstname")
-                        defaults.setValue(_lastname, forKey:"lastname")
-                        defaults.synchronize()
-                        //Add Session Token/User Defaults +
-                    }
-                }
-                //Successful create a new session +
-            }
-        }
-        sleep(2)
-        
-        return outputMsg
+        callApi(Routing.user(resourseName: "register").path, method: "POST", queryParams: queryParams, body: requestBody as AnyObject?, headerParams: headerParams, success: success, failure: failure)
     }
-    //Register Function +
+    //Register Function 2 +
+    
+    let headerParams: [String: String] = {
+        let dict = ["X-DreamFactory-Api-Key": ApiKey]
+        return dict
+    }()
+    
+    var sessionHeaderParams: [String: String] {
+        var dict = headerParams
+        dict["X-DreamFactory-Session-Token"] = sessionToken
+        return dict
+    }
+    
+    fileprivate let api = NIKApiInvoker.sharedInstance
+    
+    //Call API -
+    fileprivate func callApi(_ restApiPath: String, method: String, queryParams: [String: AnyObject]?, body: AnyObject?, headerParams: [String: String]?, success: SuccessClosure?, failure: ErrorClosure?) {
+        api.restPath(path: restApiPath, method: method, queryParams: queryParams, body: body, headerParams: headerParams, contentType: "application/json", completionBlock: { (response, error) -> Void in
+            if let error = error, failure != nil {
+                failure!(error)
+            } else if let success = success {
+                success(response)
+            }
+        })
+    }
+    //Call API +
 
     
     //Create new house -

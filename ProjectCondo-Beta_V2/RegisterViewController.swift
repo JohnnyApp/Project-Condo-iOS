@@ -65,7 +65,7 @@ class RegisterViewController: UIViewController {
             defaults.synchronize()
             
             DispatchQueue.main.async {
-                self.showHouseTableViewController()
+                self.showMainViewController()
             }
         }, failure: { error in
             NSLog("Error registering new user: \(error)")

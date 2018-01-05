@@ -80,6 +80,21 @@ final class RESTAPIEngine {
     
     static let sharedEngine = RESTAPIEngine()
     
+    //API Parameters -
+    let headerParams: [String: String] = {
+        let dict = ["X-DreamFactory-Api-Key": ApiKey]
+        return dict
+    }()
+    
+    var sessionHeaderParams: [String: String] {
+        var dict = headerParams
+        dict["X-DreamFactory-Session-Token"] = sessionToken
+        return dict
+    }
+    //API Parameters +
+    
+    fileprivate let api = NIKApiInvoker.sharedInstance
+    
     //Session Token -
     var _sessionToken: String?
     var sessionToken: String? {
@@ -136,19 +151,6 @@ final class RESTAPIEngine {
     }
     //Register Function 2 +
     
-    let headerParams: [String: String] = {
-        let dict = ["X-DreamFactory-Api-Key": ApiKey]
-        return dict
-    }()
-    
-    var sessionHeaderParams: [String: String] {
-        var dict = headerParams
-        dict["X-DreamFactory-Session-Token"] = sessionToken
-        return dict
-    }
-    
-    fileprivate let api = NIKApiInvoker.sharedInstance
-    
     //Call API -
     fileprivate func callApi(_ restApiPath: String, method: String, queryParams: [String: AnyObject]?, body: AnyObject?, headerParams: [String: String]?, success: SuccessClosure?, failure: ErrorClosure?) {
         api.restPath(path: restApiPath, method: method, queryParams: queryParams, body: body, headerParams: headerParams, contentType: "application/json", completionBlock: { (response, error) -> Void in
@@ -160,160 +162,5 @@ final class RESTAPIEngine {
         })
     }
     //Call API +
-
-    
-    //Create new house -
-    func createNewHouse (_housename: String, _address1: String, _address2: String, _city: String, _state: String, _postCode: String) -> String {
-        
-        var outputMsg = ""
-        
-        //SwiftyJSON -
-        var userJSON1: JSON = [:]
-        userJSON1["email"] = UserDefaults.standard.string(forKey: "email") as AnyObject?
-        
-        var homeJSON: JSON = [:]
-        homeJSON["name"] = _housename as AnyObject?
-        homeJSON["status"] = "RENT" as AnyObject?
-        homeJSON["address1"] = _address1 as AnyObject?
-        homeJSON["address2"] = _address2 as AnyObject?
-        homeJSON["city"] = _city as AnyObject?
-        homeJSON["postalcode"] = _postCode as AnyObject?
-        homeJSON["state"] = _state as AnyObject?
-        homeJSON["users"] = userJSON1 as AnyObject?
-        
-        let resourceJSON: JSON = ["resource": homeJSON as AnyObject]
-        //SwiftyJSON +
-        
-        let userDictionary = resourceJSON
-        
-        HTTPPostJSON(url: BaseInstanceUrl + HomeTableExtension , jsonObj: userDictionary as AnyObject) {
-            (data: String, error: String?) -> Void in
-            if error != nil {
-                outputMsg = "servererror"
-            } else {
-                let outputDict = self.JSONParseDictionary(string: data)
-                
-                
-                //Check Errors -
-                if let error = outputDict["error"] as? [String : AnyObject] {
-                    if (error["message"] != nil) {
-                        outputMsg = error["message"] as! String
-                    }
-                }
-                //Check Errors +
-                
-                //Successful -
-                if outputMsg == "" {
-                    if (outputDict["session_token"] != nil) {
-                        let defaults = UserDefaults.standard
-                        defaults.setValue(_housename, forKey: "CurrHouse")
-                        defaults.synchronize()
-                    }
-                }
-                //Successful +
-            }
-        }
-        sleep(2)
-        
-        //TEST -
-        let useremail = UserDefaults.standard.string(forKey: "email") as AnyObject?
-        outputMsg = addUserHomeRelation(_useremail: useremail as! String,_housename: _housename);
-        //TEST +
-        
-        return outputMsg
-    }
-    //Create new house +
-    
-    //Add User/Home Relation -
-    func addUserHomeRelation (_useremail: String, _housename: String) -> String {
-        var outputMsg = ""
-        
-        var userJSON: JSON = [:]
-        userJSON["useremail"] = _useremail as AnyObject?
-        userJSON["homename"] = _housename as AnyObject?
-        
-        let resourceJSON: JSON = ["resource": userJSON as AnyObject]
-        
-        let userDictionary = resourceJSON
-        
-        HTTPPostJSON(url: BaseInstanceUrl + UserHomeRelationExtension , jsonObj: userDictionary as AnyObject) {
-            (data: String, error: String?) -> Void in
-            if error != nil {
-                outputMsg = "servererror"
-            } else {
-                let outputDict = self.JSONParseDictionary(string: data)
-                
-                
-                //Check Errors -
-                if let error = outputDict["error"] as? [String : AnyObject] {
-                    if (error["message"] != nil) {
-                        outputMsg = error["message"] as! String
-                    }
-                }
-                //Check Errors +
-            }
-        }
-        sleep(2)
-        
-        return outputMsg
-    }
-    //Add User/Home Relation +
-
-    func JSONParseDictionary(string: String) -> [String: AnyObject]{
-        if let data = string.data(using: String.Encoding.utf8){
-            do{
-                if let dictionary = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String: AnyObject]{
-                    return dictionary
-                }
-            }catch {
-                print("error")      //LOG ERROR
-            }
-        }
-        return [String: AnyObject]()
-    }
-    
-    func HTTPsendRequest(request: NSMutableURLRequest,callback: @escaping (String, String?) -> Void) {
-        let task = URLSession.shared.dataTask(with: request as URLRequest,completionHandler :
-            {
-                data, response, error in
-                if error != nil {
-                    callback("", (error!.localizedDescription) as String)
-                } else {
-                    callback(NSString(data: data!, encoding: String.Encoding.utf8.rawValue) as! String,nil)
-                }
-        })
-        task.resume() //Tasks are called with .resume()
-    }
-    
-    func HTTPPostJSON(url: String,
-                      jsonObj: AnyObject,
-                      callback: @escaping (String, String?) -> Void) {
-        let request = NSMutableURLRequest(url: NSURL(string: url)! as URL)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue(ApiKey, forHTTPHeaderField: "X-DreamFactory-Api-Key")
-        let jsonString = JSONStringify(value: jsonObj)
-        let data: NSData = jsonString.data(
-            using: String.Encoding.utf8)! as NSData
-        request.httpBody = data as Data
-        HTTPsendRequest(request: request,callback: callback)
-    }
-
-    
-    func JSONStringify(value: AnyObject,prettyPrinted:Bool = false) -> String{
-        let options = prettyPrinted ? JSONSerialization.WritingOptions.prettyPrinted : JSONSerialization.WritingOptions(rawValue: 0)
-        if JSONSerialization.isValidJSONObject(value) {
-            do{
-                let data = try JSONSerialization.data(withJSONObject: value, options: options)
-                if let string = NSString(data: data, encoding: String.Encoding.utf8.rawValue) {
-                    return string as String
-                }
-            }catch {
-                print("error")
-                //Access error here
-            }
-        }
-        return ""
-    }
 }
 

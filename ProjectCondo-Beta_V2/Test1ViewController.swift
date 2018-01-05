@@ -20,8 +20,8 @@ class Test1ViewController: UIViewController {
         let defaults = UserDefaults.standard
         
         FirstnameLbl.text = defaults.object(forKey: "firstname") as! String?
-        LastnameLbl.text = defaults.object(forKey: "lastname") as! String?
-        emailLbl.text = defaults.object(forKey: "email") as! String?
+        LastnameLbl.text = defaults.object(forKey: kUserName ) as! String?
+        emailLbl.text = defaults.object(forKey: kUserEmail ) as! String?
         // Do any additional setup after loading the view.
     }
 

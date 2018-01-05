@@ -19,7 +19,6 @@ class CreateHouseViewController: UIViewController {
     @IBAction func CreateAHouseInMongoDB(_ sender: Any) {
         
         var Add2Field = ""
-        var returnMsg = ""
         
         //Make sure everything is filled out -
         if ((HouseNameTxt.text?.isEmpty) != false) {
@@ -48,15 +47,6 @@ class CreateHouseViewController: UIViewController {
         }
         //Handle Address 2 +
         
-        returnMsg = RESTAPIEngine.sharedEngine.createNewHouse(_housename: HouseNameTxt.text!, _address1: Address1Txt.text!, _address2: Add2Field, _city: CityTxt.text!, _state: StateTxt.text!, _postCode: PostCodeTxt.text!)
-        if returnMsg == "" {
-            Alert.showAlertWithMessage("Success!!!", fromViewController: self)
-            showHouseListViewController();
-        } else if returnMsg != "" {
-            print("Error: " + returnMsg)
-            Alert.showAlertWithMessage("ERROR!!!", fromViewController: self)
-            return
-        }
     }
     
     //Go to House List -

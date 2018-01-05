@@ -24,7 +24,7 @@ class MainViewController: UIViewController {
                                                     defaults.setValue(self.PasswordText.text!, forKey: kPassword)
                                                     defaults.synchronize()
                                                     DispatchQueue.main.async {
-                                                        self.showHouseTableViewController()
+                                                        self.showMainViewController()
                                                     }
             }, failure: { error in
                 NSLog("Error logging in user: \(error)")

@@ -16,7 +16,7 @@ class MainViewController: UIViewController {
     @IBAction func SignInAction(_ sender: Any) {       
         if (UsernameText.text?.characters.count)! > 0 && (PasswordText.text?.characters.count)! > 0 {
             
-            RESTAPIEngine.sharedEngine.loginWithEmail2(UsernameText.text!, password: PasswordText.text!,
+            RESTAPIEngine.sharedEngine.loginWithEmail(UsernameText.text!, password: PasswordText.text!,
                                                    success: { response in
                                                     RESTAPIEngine.sharedEngine.sessionToken = response!["session_token"] as? String
                                                     let defaults = UserDefaults.standard
@@ -24,7 +24,7 @@ class MainViewController: UIViewController {
                                                     defaults.setValue(self.PasswordText.text!, forKey: kPassword)
                                                     defaults.synchronize()
                                                     DispatchQueue.main.async {
-                                                        self.showMainViewController()
+                                                        self.showHouseTableViewController()
                                                     }
             }, failure: { error in
                 NSLog("Error logging in user: \(error)")

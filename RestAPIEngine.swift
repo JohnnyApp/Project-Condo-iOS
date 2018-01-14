@@ -123,18 +123,18 @@ final class RESTAPIEngine {
     }
     //Logout Function +
     
-    //Login Function 2 -
-    func loginWithEmail2(_ email: String, password: String, success: @escaping SuccessClosure, failure: @escaping ErrorClosure) {
+    //Login Function -
+    func loginWithEmail(_ email: String, password: String, success: @escaping SuccessClosure, failure: @escaping ErrorClosure) {
         
         let requestBody: [String: AnyObject] = ["email": email as AnyObject,
                                                 "password": password as AnyObject]
         
         callApi(Routing.user(resourseName: "session").path, method: "POST", queryParams: nil, body: requestBody as AnyObject?, headerParams: headerParams, success: success, failure: failure)
     }
-    //Login Function 2 +
+    //Login Function +
     
-    //Register Function 2 -
-    func registerWithEmail2(_ email: String, password: String, firstname: String, lastname: String, username: String, phoneno: String, success: @escaping SuccessClosure, failure: @escaping ErrorClosure) {
+    //Register Function -
+    func registerWithEmail(_ email: String, password: String, firstname: String, lastname: String, username: String, phoneno: String, success: @escaping SuccessClosure, failure: @escaping ErrorClosure) {
         
         //login after signup
         let queryParams: [String: AnyObject] = ["login": "1" as AnyObject]
@@ -150,9 +150,9 @@ final class RESTAPIEngine {
         let userRequestBody: [String: AnyObject] = ["resource": requestBody as AnyObject]
         callApi(Routing.service(tableName: "user").path, method: "POST", queryParams: nil, body: userRequestBody as AnyObject?, headerParams: sessionHeaderParams, success: success, failure: failure)
     }
-    //Register Function 2 +
+    //Register Function +
     
-    //Register Function 2 -
+    //Create House Function -
     func createNewHouse(_ housename: String, address1: String, address2: String, city: String, state: String, postcode: String, success: @escaping SuccessClosure, failure: @escaping ErrorClosure) {
         
         //login after signup
@@ -167,7 +167,16 @@ final class RESTAPIEngine {
         let userRequestBody: [String: AnyObject] = ["resource": HomeRequestBody as AnyObject]
         callApi(Routing.service(tableName: "home").path, method: "POST", queryParams: nil, body: userRequestBody as AnyObject?, headerParams: sessionHeaderParams, success: success, failure: failure)
     }
-    //Register Function 2 +
+    //Create House Function +
+    
+    //Add House Function -
+    func addHouseToServer(_ houseDetails: JSON, success: @escaping SuccessClosure, failure: @escaping ErrorClosure) {
+        
+        let requestBody: [String: AnyObject] = ["resource": houseDetails as AnyObject]
+        
+        callApi(Routing.service(tableName: "home").path, method: "POST", queryParams: nil, body: requestBody as AnyObject?, headerParams: sessionHeaderParams, success: success, failure: failure)
+    }
+    //Add House Function +
     
     //Call API -
     fileprivate func callApi(_ restApiPath: String, method: String, queryParams: [String: AnyObject]?, body: AnyObject?, headerParams: [String: String]?, success: SuccessClosure?, failure: ErrorClosure?) {

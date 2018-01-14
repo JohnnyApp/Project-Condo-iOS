@@ -56,7 +56,7 @@ class RegisterViewController: UIViewController {
         
         //Make sure everything is filled out +
         
-        RESTAPIEngine.sharedEngine.registerWithEmail2(emailTxt.text!, password: passwordTxt.text!, firstname: firstNameTxt.text!, lastname: lastNameTxt.text!, username: usernameTxt.text!, phoneno: phoneNoTxt.text!, success: { response in
+        RESTAPIEngine.sharedEngine.registerWithEmail(emailTxt.text!, password: passwordTxt.text!, firstname: firstNameTxt.text!, lastname: lastNameTxt.text!, username: usernameTxt.text!, phoneno: phoneNoTxt.text!, success: { response in
             RESTAPIEngine.sharedEngine.sessionToken = response!["session_token"] as? String
             let defaults = UserDefaults.standard
             defaults.setValue(self.emailTxt.text!, forKey: kUserEmail)
@@ -65,7 +65,7 @@ class RegisterViewController: UIViewController {
             defaults.synchronize()
             
             DispatchQueue.main.async {
-                self.showMainViewController()
+                self.showHouseTableViewController()
             }
         }, failure: { error in
             NSLog("Error registering new user: \(error)")

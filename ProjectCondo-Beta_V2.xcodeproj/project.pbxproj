@@ -11,6 +11,8 @@
 		62796BBA8CFCD1C38AEF6FB6 /* Pods_ProjectCondo_Beta_V2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1FE21FECE3ABB09CDB951A4 /* Pods_ProjectCondo_Beta_V2.framework */; };
 		A945FE1237EAD5DF6A7E6A90 /* Pods_ProjectCondo_Beta_V2Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E026AB356C11E04285D386C /* Pods_ProjectCondo_Beta_V2Tests.framework */; };
 		DF05A0121EFA3E9500232A0B /* GroupRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF05A0111EFA3E9500232A0B /* GroupRecord.swift */; };
+		DF22B036200B132000D27BDA /* UserRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF22B035200B132000D27BDA /* UserRecord.swift */; };
+		DF22B038200B133100D27BDA /* HomeRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF22B037200B133100D27BDA /* HomeRecord.swift */; };
 		DF5FA4C11F00921500738B49 /* UserInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5FA4C01F00921500738B49 /* UserInterface.swift */; };
 		DF5FA4C31F0093E800738B49 /* CustomNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5FA4C21F0093E800738B49 /* CustomNavBar.swift */; };
 		DF6E83031EF794ED009CF79E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6E83021EF794ED009CF79E /* AppDelegate.swift */; };
@@ -59,6 +61,8 @@
 		B19370A34D65118C86B4DFCD /* Pods-ProjectCondo-Beta_V2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectCondo-Beta_V2.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ProjectCondo-Beta_V2/Pods-ProjectCondo-Beta_V2.debug.xcconfig"; sourceTree = "<group>"; };
 		BE6A68F882F05F75A083466A /* Pods-ProjectCondo-Beta_V2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectCondo-Beta_V2.release.xcconfig"; path = "Pods/Target Support Files/Pods-ProjectCondo-Beta_V2/Pods-ProjectCondo-Beta_V2.release.xcconfig"; sourceTree = "<group>"; };
 		DF05A0111EFA3E9500232A0B /* GroupRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupRecord.swift; sourceTree = "<group>"; };
+		DF22B035200B132000D27BDA /* UserRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRecord.swift; sourceTree = "<group>"; };
+		DF22B037200B133100D27BDA /* HomeRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRecord.swift; sourceTree = "<group>"; };
 		DF5FA4C01F00921500738B49 /* UserInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInterface.swift; sourceTree = "<group>"; };
 		DF5FA4C21F0093E800738B49 /* CustomNavBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomNavBar.swift; sourceTree = "<group>"; };
 		DF6E82FF1EF794ED009CF79E /* ProjectCondo-Beta_V2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ProjectCondo-Beta_V2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -142,6 +146,8 @@
 			isa = PBXGroup;
 			children = (
 				DF05A0111EFA3E9500232A0B /* GroupRecord.swift */,
+				DF22B037200B133100D27BDA /* HomeRecord.swift */,
+				DF22B035200B132000D27BDA /* UserRecord.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -537,7 +543,9 @@
 				DFF089521F3E4DA6001C9262 /* HousesTableViewController.swift in Sources */,
 				DFD94C5C1FFF3D6F004D3DEC /* Test1ViewController.swift in Sources */,
 				DF6E83031EF794ED009CF79E /* AppDelegate.swift in Sources */,
+				DF22B038200B133100D27BDA /* HomeRecord.swift in Sources */,
 				DF6E83051EF794ED009CF79E /* FirstViewController.swift in Sources */,
+				DF22B036200B132000D27BDA /* UserRecord.swift in Sources */,
 				DFDE3E731F1ACF95003F3F99 /* WhiteBoardTableViewController.swift in Sources */,
 				DF05A0121EFA3E9500232A0B /* GroupRecord.swift in Sources */,
 				DFF089501F3E4BA5001C9262 /* CreateHouseViewController.swift in Sources */,

@@ -15,6 +15,8 @@ class CreateHouseViewController: UIViewController {
     @IBOutlet weak var CityTxt: UITextField!
     @IBOutlet weak var StateTxt: UITextField!
     @IBOutlet weak var PostCodeTxt: UITextField!
+    
+    var homeRecord: HomeRecord?
 
     @IBAction func CreateAHouseInMongoDB(_ sender: Any) {
         
@@ -57,11 +59,32 @@ class CreateHouseViewController: UIViewController {
                 self.showHouseListViewController()
             }
         }, failure: { error in
-            NSLog("Error registering new user: \(error)")
+            NSLog("Error creating new house: \(error)")
             DispatchQueue.main.async {
                 Alert.showAlertWithMessage(error.errorMessage, fromViewController: self)
             }
         })
+        
+        /*let HomeRequestBody: [String: AnyObject] = ["housename": HouseNameTxt.text! as AnyObject,
+                                                    "address1": Address1Txt.text! as AnyObject,
+                                                    "address2": Address2Txt.text!as AnyObject,
+                                                    "city": CityTxt.text! as AnyObject,
+                                                    "state": StateTxt.text! as AnyObject,
+                                                    "postcode": PostCodeTxt.text! as AnyObject]
+        
+        
+        RESTAPIEngine.sharedEngine.addHouseToServer(HomeRequestBody, success: { response in
+            let records = response!["resource"] as! JSONArray
+            for recordInfo in records {
+                self.homeRecord!.id = (recordInfo["id"] as! NSNumber)
+            }
+        }, failure: { error in
+            NSLog("Error adding new home to server: \(error)")
+            DispatchQueue.main.async {
+                Alert.showAlertWithMessage(error.errorMessage, fromViewController: self)
+                self.navBar.enableAllTouch()
+            }
+        })*/
     }
     
     //Go to House List -

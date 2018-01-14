@@ -40,13 +40,28 @@ class CreateHouseViewController: UIViewController {
         //Make sure everything is filled out +
         
         //Handle Address 2 -
-        if ((Address1Txt.text?.isEmpty) != false) {
+        if ((Address2Txt.text?.isEmpty) != false) {
             Add2Field = ""
         } else {
             Add2Field = Address2Txt.text!
         }
         //Handle Address 2 +
         
+        RESTAPIEngine.sharedEngine.createNewHouse(HouseNameTxt.text!, address1: Address1Txt.text!, address2: Address2Txt.text!, city: CityTxt.text!, state: StateTxt.text!, postcode: PostCodeTxt.text!, success: { response in
+            RESTAPIEngine.sharedEngine.sessionToken = response!["session_token"] as? String
+            let defaults = UserDefaults.standard
+            defaults.setValue(self.HouseNameTxt.text!, forKey: kCurrHouseName)
+            defaults.synchronize()
+            
+            DispatchQueue.main.async {
+                self.showHouseListViewController()
+            }
+        }, failure: { error in
+            NSLog("Error registering new user: \(error)")
+            DispatchQueue.main.async {
+                Alert.showAlertWithMessage(error.errorMessage, fromViewController: self)
+            }
+        })
     }
     
     //Go to House List -

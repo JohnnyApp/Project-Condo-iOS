@@ -26,6 +26,7 @@ private let ContainerName = "profile_images"
 let kUserEmail = "UserEmail"
 let kUserName = "UserName"
 let kPassword = "UserPassword"
+let kCurrHouseName = "CurrentHouse"
 //Defaults +
 
 typealias SuccessClosure = (JSON?) -> Void
@@ -148,6 +149,23 @@ final class RESTAPIEngine {
         sleep(2)
         let userRequestBody: [String: AnyObject] = ["resource": requestBody as AnyObject]
         callApi(Routing.service(tableName: "user").path, method: "POST", queryParams: nil, body: userRequestBody as AnyObject?, headerParams: sessionHeaderParams, success: success, failure: failure)
+    }
+    //Register Function 2 +
+    
+    //Register Function 2 -
+    func createNewHouse(_ housename: String, address1: String, address2: String, city: String, state: String, postcode: String, success: @escaping SuccessClosure, failure: @escaping ErrorClosure) {
+        
+        //login after signup
+        //let queryParams: [String: AnyObject] = ["login": "1" as AnyObject]
+        let HomeRequestBody: [String: AnyObject] = ["housename": housename as AnyObject,
+                                                "address1": address1 as AnyObject,
+                                                "address2": address2 as AnyObject,
+                                                "city": city as AnyObject,
+                                                "state": state as AnyObject,
+                                                "postcode": postcode as AnyObject]
+        sleep(2)
+        let userRequestBody: [String: AnyObject] = ["resource": HomeRequestBody as AnyObject]
+        callApi(Routing.service(tableName: "home").path, method: "POST", queryParams: nil, body: userRequestBody as AnyObject?, headerParams: sessionHeaderParams, success: success, failure: failure)
     }
     //Register Function 2 +
     

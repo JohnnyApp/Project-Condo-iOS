@@ -20,8 +20,6 @@ class CreateHouseViewController: UIViewController {
 
     @IBAction func CreateAHouseInMongoDB(_ sender: Any) {
         
-        var Add2Field = ""
-        
         //Make sure everything is filled out -
         if ((HouseNameTxt.text?.isEmpty) != false) {
             Alert.showAlertWithMessage("Please enter a House Name", fromViewController: self)
@@ -40,7 +38,7 @@ class CreateHouseViewController: UIViewController {
             return
         }
         //Make sure everything is filled out +
-        
+        var Add2Field = ""
         //Handle Address 2 -
         if ((Address2Txt.text?.isEmpty) != false) {
             Add2Field = ""
@@ -49,23 +47,7 @@ class CreateHouseViewController: UIViewController {
         }
         //Handle Address 2 +
         
-        RESTAPIEngine.sharedEngine.createNewHouse(HouseNameTxt.text!, address1: Address1Txt.text!, address2: Address2Txt.text!, city: CityTxt.text!, state: StateTxt.text!, postcode: PostCodeTxt.text!, success: { response in
-            RESTAPIEngine.sharedEngine.sessionToken = response!["session_token"] as? String
-            let defaults = UserDefaults.standard
-            defaults.setValue(self.HouseNameTxt.text!, forKey: kCurrHouseName)
-            defaults.synchronize()
-            
-            DispatchQueue.main.async {
-                self.showHouseListViewController()
-            }
-        }, failure: { error in
-            NSLog("Error creating new house: \(error)")
-            DispatchQueue.main.async {
-                Alert.showAlertWithMessage(error.errorMessage, fromViewController: self)
-            }
-        })
-        
-        /*let HomeRequestBody: [String: AnyObject] = ["housename": HouseNameTxt.text! as AnyObject,
+        let HomeRequestBody: [String: AnyObject] = ["housename": HouseNameTxt.text! as AnyObject,
                                                     "address1": Address1Txt.text! as AnyObject,
                                                     "address2": Address2Txt.text!as AnyObject,
                                                     "city": CityTxt.text! as AnyObject,
@@ -76,7 +58,9 @@ class CreateHouseViewController: UIViewController {
         RESTAPIEngine.sharedEngine.addHouseToServer(HomeRequestBody, success: { response in
             let records = response!["resource"] as! JSONArray
             for recordInfo in records {
-                self.homeRecord!.id = (recordInfo["id"] as! NSNumber)
+                if recordInfo["_id"] != nil {
+                    self.homeRecord?.id = (recordInfo["_id"] as! NSNumber)
+                }
             }
         }, failure: { error in
             NSLog("Error adding new home to server: \(error)")
@@ -84,7 +68,8 @@ class CreateHouseViewController: UIViewController {
                 Alert.showAlertWithMessage(error.errorMessage, fromViewController: self)
                 self.navBar.enableAllTouch()
             }
-        })*/
+        })
+    self.showHouseListViewController()
     }
     
     //Go to House List -

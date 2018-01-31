@@ -24,7 +24,7 @@ extension Dictionary {
  Home model
  */
 class HomeRecord: Equatable {
-    var id: NSNumber!
+    var id: String!
     var houseName: String!
     var address1: String!
     var address2: String!
@@ -37,7 +37,7 @@ class HomeRecord: Equatable {
     }
     
     init(json: JSON) {
-        id = json["id"] as! NSNumber
+        id = json["id"] as! String
         houseName = json.nonNull("housename")
         address1 = json.nonNull("address1")
         if json["address2"] != nil {
@@ -49,6 +49,6 @@ class HomeRecord: Equatable {
 }
 
 func ==(lhs: HomeRecord, rhs: HomeRecord) -> Bool {
-    return lhs.id.isEqual(to: rhs.id)
+    return lhs.id.isEqual(rhs.id)
 }
 

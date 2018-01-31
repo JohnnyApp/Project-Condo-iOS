@@ -39,6 +39,7 @@ class CreateHouseViewController: UIViewController {
         }
         //Make sure everything is filled out +
         var Add2Field = ""
+        var idtemp = ""
         //Handle Address 2 -
         if ((Address2Txt.text?.isEmpty) != false) {
             Add2Field = ""
@@ -54,13 +55,19 @@ class CreateHouseViewController: UIViewController {
                                                     "state": StateTxt.text! as AnyObject,
                                                     "postcode": PostCodeTxt.text! as AnyObject]
         
-        
-        RESTAPIEngine.sharedEngine.addHouseToServer(HomeRequestBody, success: { response in
+        homeRecord = HomeRecord()
+        RESTAPIEngine.sharedEngine.createNewHouse(HomeRequestBody, success: { response in
             let records = response!["resource"] as! JSONArray
             for recordInfo in records {
                 if recordInfo["_id"] != nil {
-                    self.homeRecord?.id = (recordInfo["_id"] as! NSNumber)
+                    
+                    //self.homeRecord?.id = recordInfo["_id"] as! String
+                    idtemp = recordInfo["_id"] as! String
+                    //self.homeRecord?.id = idtemp as! String
                 }
+            }
+            if idtemp != "" {
+                self.createUserHomeRelationship(tmpHouseid: idtemp)
             }
         }, failure: { error in
             NSLog("Error adding new home to server: \(error)")
@@ -70,6 +77,22 @@ class CreateHouseViewController: UIViewController {
             }
         })
     self.showHouseListViewController()
+    }
+    
+    fileprivate func createUserHomeRelationship(tmpHouseid :String) {
+        
+        let defaults = UserDefaults.standard
+        let curremail = defaults.string(forKey: kUserEmail)! as String
+        
+        RESTAPIEngine.sharedEngine.createUserHomeRelation(curremail, houseId: tmpHouseid, success: {  _ in
+            Alert.showAlertWithMessage("Successful House Creation!", fromViewController: self)
+        }, failure: { error in
+            NSLog("Error creating user and home relationship: \(error)")
+            DispatchQueue.main.async {
+                Alert.showAlertWithMessage(error.errorMessage, fromViewController: self)
+                self.navigationController?.popToRootViewController(animated: true)
+            }
+        })
     }
     
     //Go to House List -

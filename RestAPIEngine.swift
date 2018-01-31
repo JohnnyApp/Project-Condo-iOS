@@ -152,31 +152,24 @@ final class RESTAPIEngine {
     }
     //Register Function +
     
-    //Create House Function -
-    func createNewHouse(_ housename: String, address1: String, address2: String, city: String, state: String, postcode: String, success: @escaping SuccessClosure, failure: @escaping ErrorClosure) {
-        
-        //login after signup
-        //let queryParams: [String: AnyObject] = ["login": "1" as AnyObject]
-        let HomeRequestBody: [String: AnyObject] = ["housename": housename as AnyObject,
-                                                "address1": address1 as AnyObject,
-                                                "address2": address2 as AnyObject,
-                                                "city": city as AnyObject,
-                                                "state": state as AnyObject,
-                                                "postcode": postcode as AnyObject]
-        sleep(2)
-        let userRequestBody: [String: AnyObject] = ["resource": HomeRequestBody as AnyObject]
-        callApi(Routing.service(tableName: "home").path, method: "POST", queryParams: nil, body: userRequestBody as AnyObject?, headerParams: sessionHeaderParams, success: success, failure: failure)
-    }
-    //Create House Function +
-    
     //Add House Function -
-    func addHouseToServer(_ houseDetails: JSON, success: @escaping SuccessClosure, failure: @escaping ErrorClosure) {
+    func createNewHouse(_ houseDetails: JSON, success: @escaping SuccessClosure, failure: @escaping ErrorClosure) {
         
         let requestBody: [String: AnyObject] = ["resource": houseDetails as AnyObject]
         
-        callApi(Routing.service(tableName: "home").path, method: "POST", queryParams: nil, body: requestBody as AnyObject?, headerParams: sessionHeaderParams, success: success, failure: failure)
+       callApi(Routing.service(tableName: "home").path, method: "POST", queryParams: nil, body: requestBody as AnyObject?, headerParams: sessionHeaderParams, success: success, failure: failure)
     }
     //Add House Function +
+    
+    //Add User/House Relationship -
+    func createUserHomeRelation(_ email: String, houseId: String, success: @escaping SuccessClosure, failure: @escaping ErrorClosure) {
+        let simpleBody: [String: AnyObject] = ["email": email as AnyObject,
+                                                "house_id": houseId as AnyObject]
+        let requestBody: [String: AnyObject] = ["resource": simpleBody as AnyObject]
+        
+        callApi(Routing.service(tableName: "home_user_relationship").path, method: "POST", queryParams: nil, body: requestBody as AnyObject?, headerParams: sessionHeaderParams, success: success, failure: failure)
+    }
+    //Add User/House Relationship +
     
     //Call API -
     fileprivate func callApi(_ restApiPath: String, method: String, queryParams: [String: AnyObject]?, body: AnyObject?, headerParams: [String: String]?, success: SuccessClosure?, failure: ErrorClosure?) {

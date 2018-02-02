@@ -14,9 +14,46 @@ class HousesTableViewController: UITableViewController {
         showCreateHouseViewController();
     }
     
+    fileprivate func getHouseName(tmpHouseid :String) -> String {
+        
+        /*RESTAPIEngine.sharedEngine.createUserHomeRelation(curremail, houseId: tmpHouseid, success: { response in
+            Alert.showAlertWithMessage("Successful House Creation!", fromViewController: self)
+        }, failure: { error in
+            NSLog("Error creating user and home relationship: \(error)")
+            DispatchQueue.main.async {
+                Alert.showAlertWithMessage(error.errorMessage, fromViewController: self)
+                self.navigationController?.popToRootViewController(animated: true)
+            }
+        })*/
+        return ""
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let defaults = UserDefaults.standard
+        let curremail = defaults.string(forKey: kUserEmail)! as String
+        var houseidtemp = ""
+        var housenametemp = ""
+        var houseArray:[[String]] = []
+        
+        RESTAPIEngine.sharedEngine.getHousesFromServerWithUserEmail(curremail, success: { response in
+            let records = response!["resource"] as! JSONArray
+            for recordInfo in records {
+                if recordInfo["house_id"] != nil {
+                    houseidtemp = recordInfo["house_id"] as! String
+                    housenametemp = self.getHouseName(tmpHouseid: houseidtemp)
+                    print("House ID: " + houseidtemp)
+                }
+            }
+        }, failure: { error in
+            NSLog("Server Error: \(error)")
+            DispatchQueue.main.async {
+                Alert.showAlertWithMessage(error.errorMessage, fromViewController: self)
+                self.navigationController?.popToRootViewController(animated: true)
+            }
+        })
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 

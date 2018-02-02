@@ -60,10 +60,7 @@ class CreateHouseViewController: UIViewController {
             let records = response!["resource"] as! JSONArray
             for recordInfo in records {
                 if recordInfo["_id"] != nil {
-                    
-                    //self.homeRecord?.id = recordInfo["_id"] as! String
                     idtemp = recordInfo["_id"] as! String
-                    //self.homeRecord?.id = idtemp as! String
                 }
             }
             if idtemp != "" {
@@ -84,7 +81,7 @@ class CreateHouseViewController: UIViewController {
         let defaults = UserDefaults.standard
         let curremail = defaults.string(forKey: kUserEmail)! as String
         
-        RESTAPIEngine.sharedEngine.createUserHomeRelation(curremail, houseId: tmpHouseid, success: {  _ in
+        RESTAPIEngine.sharedEngine.createUserHomeRelation(curremail, houseId: tmpHouseid, success: { response in
             Alert.showAlertWithMessage("Successful House Creation!", fromViewController: self)
         }, failure: { error in
             NSLog("Error creating user and home relationship: \(error)")

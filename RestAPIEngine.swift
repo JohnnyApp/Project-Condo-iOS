@@ -171,6 +171,22 @@ final class RESTAPIEngine {
     }
     //Add User/House Relationship +
     
+    //Get House Per User -
+    func getHousesFromServerWithUserEmail(_ userEmail: String, success: @escaping SuccessClosure, failure: @escaping ErrorClosure) {
+        // only get contact_group_relationships for this group
+        let queryParams: [String: AnyObject] = ["filter": "email=\(userEmail)" as AnyObject]
+        //var queryParams: [String: AnyObject] = ["filter": "contact_group_id=\(userEmail)" as AnyObject]
+        
+        // request without related would return just {id, groupId, contactId}
+        // set the related field to go get the contact records referenced by
+        // each contact_group_relationship record
+        
+       // queryParams["related"] = "contact_by_contact_id" as AnyObject?
+        
+        callApi(Routing.service(tableName: "home_user_relationship").path, method: "GET", queryParams: queryParams, body: nil, headerParams: sessionHeaderParams, success: success, failure: failure)
+    }
+    //Get House Per User +
+    
     //Call API -
     fileprivate func callApi(_ restApiPath: String, method: String, queryParams: [String: AnyObject]?, body: AnyObject?, headerParams: [String: String]?, success: SuccessClosure?, failure: ErrorClosure?) {
         api.restPath(path: restApiPath, method: method, queryParams: queryParams, body: body, headerParams: headerParams, contentType: "application/json", completionBlock: { (response, error) -> Void in

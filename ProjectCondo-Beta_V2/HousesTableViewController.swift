@@ -9,6 +9,11 @@
 import UIKit
 
 class HousesTableViewController: UITableViewController {
+    var test1 = ""
+    
+    // Used to hold house Array's
+    fileprivate var houseArray: [[String]]!
+    fileprivate var houseArrayTemp: [String]!
     
     @IBAction func OpenCreateHouse(_ sender: Any) {
         showCreateHouseViewController();
@@ -19,30 +24,24 @@ class HousesTableViewController: UITableViewController {
 
         let defaults = UserDefaults.standard
         let curremail = defaults.string(forKey: kUserEmail)! as String
-        var houseidtemp = ""
-        var housenametemp = ""
-        var houseArray:[[String]] = []
         
-        RESTAPIEngine.sharedEngine.getHousesFromServerWithUserEmail(curremail, success: { response in
-            let records = response!["resource"] as! JSONArray
-            for recordInfo in records {
-                if recordInfo["house_id"] != nil {
-                    houseidtemp = recordInfo["house_id"] as! String
-                    housenametemp = self.getHouseName(tmpHouseid: houseidtemp)
-                    print("House ID: " + houseidtemp)
-                    //print("House Name: " + housenametemp)
-                    
-                    //Put into 2D Array...
-                    
-                }
+        self.houseArrayTemp = []
+        
+        var houseidtemp = ""
+        //var housenametemp = ""
+        //var houseArray: [String: String] = ["": ""]
+        
+        RESTAPIEngine.sharedEngine.getHouseIDArray(curremail) {strings, error in
+            //THIS SHIT RUNS FIRST
+            //DO SHIT WITH STRINGS HERE...
+            for str in strings! {
+                houseidtemp = houseidtemp + "," + str
+                self.houseArrayTemp.append(str)
+                print("INDIVIDUAL STRINGS HERE: " + str)
             }
-        }, failure: { error in
-            NSLog("Server Error: \(error)")
-            DispatchQueue.main.async {
-                Alert.showAlertWithMessage(error.errorMessage, fromViewController: self)
-                self.navigationController?.popToRootViewController(animated: true)
-            }
-        })
+        print(self.houseArrayTemp)
+        }
+        //THEN THIS SHIT...
     }
 
     override func didReceiveMemoryWarning() {
@@ -61,26 +60,6 @@ class HousesTableViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         return 0
     }
-    
-    fileprivate func getHouseName(tmpHouseid :String) -> String {
-        RESTAPIEngine.sharedEngine.getHouseNameFromHouseID(tmpHouseid, success: { response in
-            let records = response!["resource"] as! JSONArray
-            for recordInfo in records {
-                if recordInfo["housename"] != nil {
-                    let housenametemp = recordInfo["housename"] as! String
-                    //return housenametemp
-                }
-            }
-         }, failure: { error in
-            NSLog("Error creating user and home relationship: \(error)")
-            DispatchQueue.main.async {
-                Alert.showAlertWithMessage(error.errorMessage, fromViewController: self)
-                self.navigationController?.popToRootViewController(animated: true)
-            }
-         })
-        return ""
-    }
-
     fileprivate func showCreateHouseViewController() {
         let createHouseViewController = self.storyboard?.instantiateViewController(withIdentifier: "CreateHouseViewController")
         self.present(createHouseViewController!, animated: true, completion: nil)

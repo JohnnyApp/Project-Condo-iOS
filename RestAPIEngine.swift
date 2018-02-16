@@ -9,7 +9,7 @@
 //import Foundation
 import UIKit
 import Foundation
-import SwiftyJSON
+//import SwiftyJSON
 
 //Server Setup Parameters -
 //private let ApiKey = "4be93293a709f0bbad4e5f6da89130c870889c34471ad9849ee8a74c52336c2a"       //Demo
@@ -178,6 +178,24 @@ final class RESTAPIEngine {
     }
     //Get House Per User +
     
+    //Get House Array from API Call -
+    func getHouseIDArray(_ userEmail: String, completionHandler: @escaping ([String]?, Error?) -> Void) {
+        getHousesFromServerWithUserEmail(userEmail, success: { response in
+            let records = response!["resource"] as! JSONArray
+            var strings = [String]()
+            for recordInfo in records {
+                if recordInfo["house_id"] != nil {
+                    strings.append(recordInfo["house_id"] as! String)
+                }
+            }
+            completionHandler(strings, nil)
+        }, failure: { error in
+            NSLog("Server Error: \(error)")
+            completionHandler(nil,error)
+        })
+    }
+    //Get House Per from API Call +
+    
     //Get House Name  -
     func getHouseNameFromHouseID(_ houseid: String, success: @escaping SuccessClosure, failure: @escaping ErrorClosure) {
         // only get contact_group_relationships for this group
@@ -185,6 +203,24 @@ final class RESTAPIEngine {
         callApi(Routing.service(tableName: "home").path, method: "GET", queryParams: queryParams, body: nil, headerParams: sessionHeaderParams, success: success, failure: failure)
     }
     //Get House Per User +
+    
+    //Get House Array from API Call -
+    func getHouseNameFromID(_ houseid: String, completionHandler: @escaping (String?, Error?) -> Void) {
+        getHousesFromServerWithUserEmail(houseid, success: { response in
+            let records = response!["resource"] as! JSONArray
+            var housenamestring = ""
+            for recordInfo in records {
+                if recordInfo["housename"] != nil {
+                    housenamestring = recordInfo["housename"] as! String
+                }
+            }
+            completionHandler(housenamestring, nil)
+        }, failure: { error in
+            NSLog("Server Error: \(error)")
+            completionHandler(nil,error)
+        })
+    }
+    //Get House Per from API Call +
     
     //Call API -
     fileprivate func callApi(_ restApiPath: String, method: String, queryParams: [String: AnyObject]?, body: AnyObject?, headerParams: [String: String]?, success: SuccessClosure?, failure: ErrorClosure?) {
@@ -197,5 +233,6 @@ final class RESTAPIEngine {
         })
     }
     //Call API +
+    
 }
 

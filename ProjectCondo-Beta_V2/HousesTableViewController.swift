@@ -8,15 +8,17 @@
 
 import UIKit
 
-class HousesTableViewController: UITableViewController {
-    var test1 = ""
-    
-    // Used to hold house Array's
-    fileprivate var houseArray: [[String]]!
+class HousesTableViewController: UITableViewController {    
+    fileprivate var homeArray2: [String:String] = [:]
     fileprivate var houseArrayTemp: [String]!
     
     @IBAction func OpenCreateHouse(_ sender: Any) {
         showCreateHouseViewController();
+    }
+    @IBAction func test(_ sender: Any) {
+        for (key,value) in self.homeArray2 {
+            print("Key: " + key + " Name:" + value)
+        }
     }
     
     override func viewDidLoad() {
@@ -27,19 +29,18 @@ class HousesTableViewController: UITableViewController {
         
         self.houseArrayTemp = []
         
-        var houseidtemp = ""
-        //var housenametemp = ""
-        //var houseArray: [String: String] = ["": ""]
-        
         RESTAPIEngine.sharedEngine.getHouseIDArray(curremail) {strings, error in
-            //THIS SHIT RUNS FIRST
-            //DO SHIT WITH STRINGS HERE...
             for str in strings! {
-                houseidtemp = houseidtemp + "," + str
                 self.houseArrayTemp.append(str)
-                print("INDIVIDUAL STRINGS HERE: " + str)
             }
-        print(self.houseArrayTemp)
+            
+            for tmp in self.houseArrayTemp {
+                //print("Test: " + tmp)
+                RESTAPIEngine.sharedEngine.getHouseNameArray(tmp) {strings, error in
+                    self.homeArray2.updateValue(strings!, forKey: tmp)
+                }
+            }
+
         }
         //THEN THIS SHIT...
     }

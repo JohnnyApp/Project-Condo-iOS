@@ -205,8 +205,8 @@ final class RESTAPIEngine {
     //Get House Per User +
     
     //Get House Array from API Call -
-    func getHouseNameFromID(_ houseid: String, completionHandler: @escaping (String?, Error?) -> Void) {
-        getHousesFromServerWithUserEmail(houseid, success: { response in
+    func getHouseNameArray(_ houseid: String, completionHandler: @escaping (String?, Error?) -> Void) {
+        getHouseNameFromHouseID(houseid, success: { response in
             let records = response!["resource"] as! JSONArray
             var housenamestring = ""
             for recordInfo in records {

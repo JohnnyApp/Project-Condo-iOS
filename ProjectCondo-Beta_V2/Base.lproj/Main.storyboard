@@ -425,6 +425,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="pzE-bf-ixC">
+                        <barButtonItem key="leftBarButtonItem" title="Item" id="ANy-8H-NFb">
+                            <connections>
+                                <action selector="test:" destination="aM3-IF-PsN" id="zIJ-t7-xx2"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="7oR-Eb-VNS">
                             <connections>
                                 <action selector="OpenCreateHouse:" destination="aM3-IF-PsN" id="tSm-HZ-RG6"/>

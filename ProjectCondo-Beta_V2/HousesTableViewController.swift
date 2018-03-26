@@ -23,7 +23,38 @@ class HousesTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.getHouseDataPerUser()
+        //THEN THIS SHIT...
+        print("Start");
+        for (key,value) in self.homeArray2 {
+            print("Key: " + key + " Name:" + value)
+        }
+        print("End")
+    }
 
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+
+    // MARK: - Table view data source
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        // #warning Incomplete implementation, return the number of sections
+        return 0
+    }
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
+        
+        
+        return 0
+    }
+    fileprivate func showCreateHouseViewController() {
+        let createHouseViewController = self.storyboard?.instantiateViewController(withIdentifier: "CreateHouseViewController")
+        self.present(createHouseViewController!, animated: true, completion: nil)
+    }
+    fileprivate func getHouseDataPerUser() {
         let defaults = UserDefaults.standard
         let curremail = defaults.string(forKey: kUserEmail)! as String
         
@@ -40,30 +71,8 @@ class HousesTableViewController: UITableViewController {
                     self.homeArray2.updateValue(strings!, forKey: tmp)
                 }
             }
-
+            
         }
-        //THEN THIS SHIT...
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
-    }
-    fileprivate func showCreateHouseViewController() {
-        let createHouseViewController = self.storyboard?.instantiateViewController(withIdentifier: "CreateHouseViewController")
-        self.present(createHouseViewController!, animated: true, completion: nil)
     }
     
 }

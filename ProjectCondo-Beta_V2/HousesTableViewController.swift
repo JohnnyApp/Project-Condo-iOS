@@ -11,6 +11,7 @@ import UIKit
 class HousesTableViewController: UITableViewController {    
     fileprivate var homeArray2: [String:String] = [:]
     fileprivate var houseArrayTemp: [String]!
+
     
     @IBAction func OpenCreateHouse(_ sender: Any) {
         showCreateHouseViewController();
@@ -18,38 +19,48 @@ class HousesTableViewController: UITableViewController {
     @IBAction func test(_ sender: Any) {
         for (key,value) in self.homeArray2 {
             print("Key: " + key + " Name:" + value)
+            data.append(value)
         }
+        tableView.reloadData()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.getHouseDataPerUser()
+        getHouseDataPerUser()
         //THEN THIS SHIT...
-        print("Start");
-        for (key,value) in self.homeArray2 {
-            print("Key: " + key + " Name:" + value)
-        }
-        print("End")
-    }
+        /*for i in 0...5 {
+            data.append("\(i)")
+        }*/
 
+        tableView.dataSource = self
+    }
+    private var data: [String] = []
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
-        
-        
-        return 0
+        //return homeArray2.count
+        return data.count
     }
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "homeCell")! //1.
+        
+        //let text = homeArray2[indexPath.row];
+        let text = data[indexPath.row] //2.
+        
+        cell.textLabel?.text = text //3.
+        
+        return cell //4.
+    }
+    
     fileprivate func showCreateHouseViewController() {
         let createHouseViewController = self.storyboard?.instantiateViewController(withIdentifier: "CreateHouseViewController")
         self.present(createHouseViewController!, animated: true, completion: nil)
@@ -66,7 +77,6 @@ class HousesTableViewController: UITableViewController {
             }
             
             for tmp in self.houseArrayTemp {
-                //print("Test: " + tmp)
                 RESTAPIEngine.sharedEngine.getHouseNameArray(tmp) {strings, error in
                     self.homeArray2.updateValue(strings!, forKey: tmp)
                 }

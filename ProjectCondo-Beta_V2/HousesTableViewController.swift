@@ -17,6 +17,8 @@ class HousesTableViewController: UITableViewController {
         showCreateHouseViewController();
     }
     @IBAction func test(_ sender: Any) {
+        getHouseDataPerUser()
+        data.removeAll()
         for (key,value) in self.homeArray2 {
             print("Key: " + key + " Name:" + value)
             data.append(value)
@@ -26,6 +28,7 @@ class HousesTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        data.removeAll()
         getHouseDataPerUser()
         //THEN THIS SHIT...
         /*for i in 0...5 {

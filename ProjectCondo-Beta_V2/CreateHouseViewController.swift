@@ -57,6 +57,7 @@ class CreateHouseViewController: UIViewController {
         
         homeRecord = HomeRecord()
         RESTAPIEngine.sharedEngine.createNewHouse(HomeRequestBody, success: { response in
+            
             let records = response!["resource"] as! JSONArray
             for recordInfo in records {
                 if recordInfo["_id"] != nil {
@@ -66,6 +67,7 @@ class CreateHouseViewController: UIViewController {
             if idtemp != "" {
                 self.createUserHomeRelationship(tmpHouseid: idtemp)
             }
+            
         }, failure: { error in
             NSLog("Error adding new home to server: \(error)")
             DispatchQueue.main.async {
@@ -73,7 +75,8 @@ class CreateHouseViewController: UIViewController {
                 self.navBar.enableAllTouch()
             }
         })
-    self.showHouseListViewController()
+        self.showHouseListViewController()
+        
     }
     
     fileprivate func createUserHomeRelationship(tmpHouseid :String) {

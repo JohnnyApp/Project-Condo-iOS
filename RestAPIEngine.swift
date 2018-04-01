@@ -113,6 +113,7 @@ final class RESTAPIEngine {
     fileprivate(set) var sessionEmail: String? = nil
     fileprivate var sessionPwd: String? = nil
     
+    
     //API Parameters -
     let headerParams: [String: String] = {
         let dict = ["X-DreamFactory-Api-Key": ApiKey]

@@ -8,11 +8,13 @@
 
 import UIKit
 
-class HousesTableViewController: UITableViewController{
+class HousesTableViewController: UITableViewController, HomesDelegate{
+    
     fileprivate var homeArray2: [String:String] = [:]
     fileprivate var houseArrayTemp: [String]!
     fileprivate var currentHomes:HomeRecord? = nil
     fileprivate let dataAccess = DataAccess.sharedInstance
+    fileprivate var homes = [HomeRecord]()
 
     @IBAction func OpenCreateHouse(_ sender: Any) {
         showCreateHouseViewController();
@@ -32,6 +34,11 @@ class HousesTableViewController: UITableViewController{
         data.removeAll()
         //getHouseDataPerUser()
         tableView.dataSource = self
+        
+        //if dataAccess.isSignedIn() {
+            reloadHomesForUser(currentHomes)
+        //}
+        
     }
     private var data: [String] = []
     
@@ -62,7 +69,25 @@ class HousesTableViewController: UITableViewController{
         currentHomes = homes
         let defaults = UserDefaults.standard
         let curremail = defaults.string(forKey: kUserEmail)! as String
-        dataAccess.getHomes(currentHomes, email: curremail, resultDelegate: self as! HomesDelegate)
+        dataAccess.getHomes(currentHomes, email: curremail, resultDelegate: self)
+    }
+    
+    //Homes Delegate
+    func setHomes(_ homes: [HomeRecord]) {
+        self.homes = homes
+        
+        /*for home in homes {
+            //let homename = home.houseName
+            //let firstChar = String(describing: homename?.prefix(1))
+        }*/
+        tableView.setContentOffset(CGPoint.zero, animated: true)
+        tableView.reloadData()
+    }
+    
+    func dataAccessError(_ error: NSError?) {
+        if let error = error {
+            print("Error: \(error.localizedDescription)")
+        }
     }
     
     fileprivate func showCreateHouseViewController() {

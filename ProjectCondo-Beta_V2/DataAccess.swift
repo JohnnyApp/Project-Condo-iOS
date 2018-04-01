@@ -30,6 +30,10 @@ class DataAccess {
         getHomesAll(email, resultDelegate: resultDelegate)
     }
     
+    func isSignedIn() -> Bool {
+        return restClient.isSignedIn
+    }
+    
     fileprivate func getHomesAll(_ userEmail: String, resultDelegate: HomesDelegate) {
         let queryParams: [String: AnyObject] = ["filter": "email=\(userEmail)" as AnyObject]
         restClient.callRestService(kRestHome, method: .GET, queryParams: queryParams as! [String : String], body: nil) { restResult in

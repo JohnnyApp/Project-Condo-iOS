@@ -129,6 +129,10 @@ final class RESTAPIEngine {
     
     fileprivate let api = NIKApiInvoker.sharedInstance
     
+    var isSignedIn: Bool {
+        return (sessionToken != nil)
+    }
+    
     //Session Token -
     var _sessionToken: String?
     var sessionToken: String? {

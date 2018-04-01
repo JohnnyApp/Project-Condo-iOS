@@ -420,6 +420,7 @@ final class RESTAPIEngine {
                     }
                 }
             default:
+                print(callResult)
                 resultClosure(callResult)
             }
         })

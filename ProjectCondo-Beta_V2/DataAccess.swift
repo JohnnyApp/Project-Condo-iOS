@@ -14,7 +14,7 @@ private let kSessionTokenKey = "SessionToken"
 private let DbServiceName = "/mongodb/_table"
 private let ContainerName = "profile_images"
 
-private let kRestHome = "mongodb/_table/home"
+private let kRestHome = "/mongodb/_table/home"
 private let kRestHomeUserRelationship = "/mongodb/_table/home_user_relationship"
 
 protocol HomesDelegate {
@@ -27,6 +27,7 @@ class DataAccess {
     fileprivate var restClient = RESTAPIEngine()
     
     func getHomes(_ group:HomeRecord?, email: String, resultDelegate: HomesDelegate) {
+        print("GET HOMES")
         getHomesAll(email, resultDelegate: resultDelegate)
     }
     
@@ -36,11 +37,14 @@ class DataAccess {
     
     fileprivate func getHomesAll(_ userEmail: String, resultDelegate: HomesDelegate) {
         let queryParams: [String: AnyObject] = ["filter": "email=\(userEmail)" as AnyObject]
+        print("START GET ALL HOMES")
         restClient.callRestService(kRestHome, method: .GET, queryParams: queryParams as! [String : String], body: nil) { restResult in
             if restResult.bIsSuccess {
+                print("start bISSuccess")
                 var homes = [HomeRecord]()
                 if let homesArray = restResult.json?["resource"] as? JSONArray {
                     for homeJSON in homesArray {
+                        print("appending...")
                         homes.append(HomeRecord(json:homeJSON))
                     }
                 }

@@ -12,6 +12,7 @@ class HousesTableViewController: UITableViewController, HomesDelegate{
     
     fileprivate var homeArray2: [String:String] = [:]
     fileprivate var houseArrayTemp: [String]!
+    fileprivate var homesByHome = [String: [HomeRecord]]()
     fileprivate var currentHomes:HomeRecord? = nil
     fileprivate let dataAccess = DataAccess.sharedInstance
     fileprivate var homes = [HomeRecord]()
@@ -19,16 +20,7 @@ class HousesTableViewController: UITableViewController, HomesDelegate{
     @IBAction func OpenCreateHouse(_ sender: Any) {
         showCreateHouseViewController();
     }
-    @IBAction func test(_ sender: Any) {
-        getHouseDataPerUser()
-        data.removeAll()
-        for (key,value) in self.homeArray2 {
-            print("Key: " + key + " Name:" + value)
-            data.append(value)
-        }
-        tableView.reloadData()
-    }
-    
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         data.removeAll()
@@ -53,15 +45,20 @@ class HousesTableViewController: UITableViewController, HomesDelegate{
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data.count
+        return homes.count
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "homeCell")! //1.
+        var homeName = "(no-name)"
+        print("Start: NOTHING")
+        if let home = homeForIndexPath(indexPath) {
+            
+            homeName = home.houseName
+            print("Home Name: " + homeName)
+        }
         
-        let text = data[indexPath.row] //2.
-        
-        cell.textLabel?.text = text //3.
-        
+        cell.textLabel?.text = homeName
+
         return cell //4.
     }
     
@@ -72,14 +69,15 @@ class HousesTableViewController: UITableViewController, HomesDelegate{
         dataAccess.getHomes(currentHomes, email: curremail, resultDelegate: self)
     }
     
+    fileprivate func homeForIndexPath(_ indexPath:IndexPath) -> HomeRecord? {
+        var home:HomeRecord? = nil
+        home = homes[(indexPath as NSIndexPath).row]
+        return home
+    }
+    
     //Homes Delegate
     func setHomes(_ homes: [HomeRecord]) {
         self.homes = homes
-        
-        /*for home in homes {
-            //let homename = home.houseName
-            //let firstChar = String(describing: homename?.prefix(1))
-        }*/
         tableView.setContentOffset(CGPoint.zero, animated: true)
         tableView.reloadData()
     }

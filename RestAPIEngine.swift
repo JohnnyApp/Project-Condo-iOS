@@ -11,6 +11,8 @@ import UIKit
 import Foundation
 //import SwiftyJSON
 
+let kRESTServerActiveCountUpdated = "kRESTServerActiveCountUpdated"
+
 //Server Setup Parameters -
 //private let ApiKey = "4be93293a709f0bbad4e5f6da89130c870889c34471ad9849ee8a74c52336c2a"       //Demo
 private let ApiKey = "0e72faf8133c347beec46d2204a96d3c1e025a328ebc9c0f3f2a2767bf5d5d4f"         //Localhost
@@ -31,6 +33,35 @@ let kCurrHouseName = "CurrentHouse"
 
 typealias SuccessClosure = (JSON?) -> Void
 typealias ErrorClosure = (NSError) -> Void
+
+typealias SuccessHandler = (Bool, String?)->Void
+typealias RestResultClosure = (RestCallResult) -> Void
+enum RestCallResult {
+    case success(result: JSON?)
+    case failure(error: NSError)
+    case unAuthorizedReauthenticate
+    
+    var bIsSuccess: Bool {
+        switch (self) {
+        case ( .success(_)): return true
+        default: return false
+        }
+    }
+    var json: JSON? {
+        switch (self) {
+        case (let .success(result)): return result
+        default: return nil
+        }
+    }
+    var error: NSError? {
+        switch (self) {
+        case (let .failure(error)): return error
+        default: return nil
+        }
+    }
+}
+
+enum HTTPMethod: String { case GET, POST, PATCH, DELETE }
 
 //Error -
 extension NSError {
@@ -77,6 +108,10 @@ enum Routing {
 final class RESTAPIEngine {
     
     static let sharedEngine = RESTAPIEngine()
+    fileprivate let kRestSignIn = "/user/session"
+    fileprivate var restActiveCallCount = 0
+    fileprivate(set) var sessionEmail: String? = nil
+    fileprivate var sessionPwd: String? = nil
     
     //API Parameters -
     let headerParams: [String: String] = {
@@ -233,6 +268,166 @@ final class RESTAPIEngine {
         })
     }
     //Call API +
+    
+    fileprivate func restErrorForStatusCode(_ statusCode: Int, json: JSON?) -> NSError {
+        var userInfo = json
+        if let pr = json {
+            if let errorDict = pr["error"] {
+                if let errorDict = errorDict as? JSON {
+                    if let msg = errorDict["message"] as? String {
+                        userInfo = [NSLocalizedDescriptionKey : msg as AnyObject]
+                    }
+                }
+            }
+        }
+        let error = NSError(domain: "DreamFactoryAPI", code: statusCode, userInfo: userInfo)
+        return error
+    }
+    
+    fileprivate func setUserDataFromJson(_ signInJson:JSON?) -> Bool {
+        if let signInJson = signInJson {
+            // elements: session_token, email, last_name, role_id, session_id, role, last_login_date, is_sys_admin, host, name, id
+            sessionToken = signInJson["session_token"] as? String
+            sessionEmail = signInJson["email"] as? String
+        }
+        else {
+            sessionToken = nil
+            sessionEmail = nil
+            sessionPwd = nil
+        }
+        // Could set other data here
+        return (sessionToken != nil)
+    }
+    
+    func signInWithEmail(_ email:String, password:String, signInHandler: @escaping SuccessHandler) {
+        let requestData = ["email" : email, "password" : password] as AnyObject
+        
+        callRestService(kRestSignIn, method: .POST, queryParams: nil, body: requestData) { (callResult) in
+            var bSuccess = false
+            if callResult.bIsSuccess {
+                self.sessionPwd = password
+                bSuccess = self.setUserDataFromJson(callResult.json)
+            }
+            signInHandler(bSuccess, callResult.error?.localizedDescription)
+        }
+    }
+    
+    fileprivate func callCountIncrement(_ bIsEntry:Bool) {
+        synchronizedSelf() {
+            restActiveCallCount = max(0, restActiveCallCount + (bIsEntry ? 1 : -1))
+            
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: Notification.Name(rawValue: kRESTServerActiveCountUpdated), object: self, userInfo: ["count" : NSNumber.init(value: self.restActiveCallCount as Int)])
+            }
+        }
+    }
+    
+    fileprivate func checkData(_ data: Data?, response: URLResponse?, error: NSError?) -> RestCallResult {
+        var parsedJSONResults: JSON?
+        
+        if let data = data {
+            do {
+                let jsonData = try JSONSerialization.jsonObject(with: data, options: [])
+                parsedJSONResults = jsonData as? JSON
+            }
+            catch {
+                // Ignore if not JSON
+            }
+        }
+        
+        if let response_error = error {
+            let error = NSError(domain: response_error.domain, code: response_error.code, userInfo: parsedJSONResults)
+            return .failure(error: error)
+        }
+        else {
+            let statusCode = (response as! HTTPURLResponse).statusCode
+            if statusCode == 401 && sessionToken != nil && sessionEmail != nil && sessionPwd != nil {
+                sessionToken = nil
+                return .unAuthorizedReauthenticate
+            }
+            else if NSLocationInRange(statusCode, NSMakeRange(200, 99)) {
+                return .success(result: parsedJSONResults)
+            }
+            else {
+                let error = self.restErrorForStatusCode(statusCode, json: parsedJSONResults)
+                return .failure(error: error)
+            }
+        }
+    }
+    
+    fileprivate func buildRequest(_ path: String, method: HTTPMethod, queryParams: [String: String]?, body: AnyObject?) -> URLRequest {
+        let request = NSMutableURLRequest()
+        var requestUrl = path
+        
+        // build the query params into the URL. ["filter" : "true", "sort" : "1"] becomes "<url>?filter=true&sort=1
+        if let queryParams = queryParams {
+            let parameterString = queryParams.stringFromHttpParameters()
+            requestUrl = "\(path)?\(parameterString)"
+        }
+        
+        let URL = Foundation.URL(string: requestUrl)!
+        request.url = URL
+        request.timeoutInterval = 30
+        
+        request.httpMethod = method.rawValue
+        if let body = body,
+            let data = try? JSONSerialization.data(withJSONObject: body, options: []) {
+            
+            //else if let body = body as? NIKFile {
+            //    data = body.data
+            //}
+            //else {
+            //    data = body.data(using: String.Encoding.utf8)
+            //}
+            
+            let postLength = "\(data.count)"
+            request.setValue(postLength, forHTTPHeaderField: "Content-Length")
+            request.httpBody = data
+        }
+        
+        return request as URLRequest
+    }
+    
+    //Call Rest Service -
+    func callRestService(_ relativePath: String, method:HTTPMethod, queryParams: [String: String]?, body: AnyObject?, resultClosure:@escaping RestResultClosure) {
+        
+        let path = BaseInstanceUrl + relativePath
+        
+        callCountIncrement(true)
+        let request = buildRequest(path, method: method, queryParams: queryParams, body: body)
+        let config = URLSessionConfiguration.default
+        config.httpAdditionalHeaders = sessionHeaderParams
+        let session = URLSession(configuration: config)
+        print("REST(\(method.rawValue))->\(request.url?.absoluteString)")
+        
+        let task = session.dataTask(with: request, completionHandler: { data, response, error -> Void in
+            self.callCountIncrement(false)
+            let callResult = self.checkData(data, response: response, error: error as NSError?)
+            switch callResult {
+            case .unAuthorizedReauthenticate:
+                print("REST:UnAuthorizedReauthenticate")
+                self.signInWithEmail(self.sessionEmail!, password: self.sessionPwd!) { (bSuccess, _) in
+                    if bSuccess && self.restActiveCallCount < 20 { // ReAuth worked, try original request again. Prevent endless looping.
+                        self.callRestService(relativePath, method: method, queryParams: queryParams, body: body, resultClosure: resultClosure)
+                    }
+                    else {
+                        resultClosure(callResult)
+                    }
+                }
+            default:
+                resultClosure(callResult)
+            }
+        })
+        task.resume()
+    }
+    //Call Rest Service +
+    fileprivate func synchronizedSelf(_ closure: () -> ()) {
+        objc_sync_enter(self)
+        defer {
+            objc_sync_exit(self)
+        }
+        closure()
+    }
     
 }
 

@@ -18,5 +18,40 @@ private let ContainerName = "profile_images"
 private let kRestHome = "mongodb/_table/home"
 private let kRestHomeUserRelationship = "/mongodb/_table/home_user_relationship"
 
+protocol HomesDelegate {
+    func setHomess(_ homes:[HomeRecord])
+    func dataAccessError(_ error:NSError?)
+}
+
 class DataAccess {
+    static let sharedInstance = DataAccess()
+    //fileprivate var restClient = RESTAPIEngine(apiKey: kApiKey, instanceUrl: kBaseInstanceUrl)
+    
+    func getHomes(_ group:HomeRecord?, email: String, resultDelegate: HomesDelegate) {
+        getHomesAll(email, resultDelegate: resultDelegate)
+    }
+    
+    fileprivate func getHomesAll(_ userEmail: String, resultDelegate: HomesDelegate) {
+        let queryParams: [String: AnyObject] = ["filter": "email=\(userEmail)" as AnyObject]
+        /*restClient.callRestService(kRestContact, method: .GET, queryParams: queryParams, body: nil) { restResult in
+            if restResult.bIsSuccess {
+                var contacts = [ContactRecord]()
+                if let contactsArray = restResult.json?["resource"] as? JSONArray {
+                    for contactJSON in contactsArray {
+                        if let contact = ContactRecord(json:contactJSON) {
+                            contacts.append(contact)
+                        }
+                    }
+                }
+                DispatchQueue.main.async {
+                    resultDelegate.setContacts(contacts)
+                }
+            }
+            else {
+                DispatchQueue.main.async {
+                    resultDelegate.dataAccessError(restResult.error)
+                }
+            }
+        }*/
+    }
 }

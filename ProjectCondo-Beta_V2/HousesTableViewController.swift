@@ -8,11 +8,12 @@
 
 import UIKit
 
-class HousesTableViewController: UITableViewController {    
+class HousesTableViewController: UITableViewController{
     fileprivate var homeArray2: [String:String] = [:]
     fileprivate var houseArrayTemp: [String]!
+    fileprivate var currentHomes:HomeRecord? = nil
+    fileprivate let dataAccess = DataAccess.sharedInstance
 
-    
     @IBAction func OpenCreateHouse(_ sender: Any) {
         showCreateHouseViewController();
     }
@@ -29,12 +30,7 @@ class HousesTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         data.removeAll()
-        getHouseDataPerUser()
-        //THEN THIS SHIT...
-        /*for i in 0...5 {
-            data.append("\(i)")
-        }*/
-
+        //getHouseDataPerUser()
         tableView.dataSource = self
     }
     private var data: [String] = []
@@ -50,18 +46,23 @@ class HousesTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //return homeArray2.count
         return data.count
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "homeCell")! //1.
         
-        //let text = homeArray2[indexPath.row];
         let text = data[indexPath.row] //2.
         
         cell.textLabel?.text = text //3.
         
         return cell //4.
+    }
+    
+    fileprivate func reloadHomesForUser(_ homes:HomeRecord?) {
+        currentHomes = homes
+        let defaults = UserDefaults.standard
+        let curremail = defaults.string(forKey: kUserEmail)! as String
+        dataAccess.getHomes(currentHomes, email: curremail, resultDelegate: self as! HomesDelegate)
     }
     
     fileprivate func showCreateHouseViewController() {

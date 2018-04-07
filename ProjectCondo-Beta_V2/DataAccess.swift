@@ -18,7 +18,7 @@ private let kRestHome = "/mongodb/_table/home"
 private let kRestHomeUserRelationship = "/mongodb/_table/home_user_relationship"
 
 protocol HomesDelegate {
-    func setHomes(_ homes:[HomeRecord])
+    func setHomes(_ homes:[HomeUserRecord])
     func dataAccessError(_ error:NSError?)
 }
 
@@ -26,8 +26,7 @@ class DataAccess {
     static let sharedInstance = DataAccess()
     fileprivate var restClient = RESTAPIEngine()
     
-    func getHomes(_ group:HomeRecord?, email: String, resultDelegate: HomesDelegate) {
-        print("GET HOMES")
+    func getHomes(_ group:HomeUserRecord?, email: String, resultDelegate: HomesDelegate) {
         getHomesAll(email, resultDelegate: resultDelegate)
     }
     
@@ -36,16 +35,16 @@ class DataAccess {
     }
     
     fileprivate func getHomesAll(_ userEmail: String, resultDelegate: HomesDelegate) {
-        let queryParams: [String: AnyObject] = ["filter": "email=\(userEmail)" as AnyObject]
-        print("START GET ALL HOMES")
-        restClient.callRestService(kRestHome, method: .GET, queryParams: queryParams as! [String : String], body: nil) { restResult in
+        let queryParams = ["filter": "email=\(userEmail)"]
+        restClient.callRestService(kRestHomeUserRelationship, method: .GET, queryParams: queryParams, body: nil) { restResult in
             if restResult.bIsSuccess {
-                print("start bISSuccess")
-                var homes = [HomeRecord]()
+                var homes = [HomeUserRecord]()
                 if let homesArray = restResult.json?["resource"] as? JSONArray {
                     for homeJSON in homesArray {
-                        print("appending...")
-                        homes.append(HomeRecord(json:homeJSON))
+                        let home = HomeUserRecord(json:homeJSON)
+                        if home.id != nil {
+                            homes.append(home)
+                        }
                     }
                 }
                 DispatchQueue.main.async {

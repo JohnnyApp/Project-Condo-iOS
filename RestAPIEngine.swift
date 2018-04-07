@@ -202,9 +202,10 @@ final class RESTAPIEngine {
     //Add House Function +
     
     //Add User/House Relationship -
-    func createUserHomeRelation(_ email: String, houseId: String, success: @escaping SuccessClosure, failure: @escaping ErrorClosure) {
+    func createUserHomeRelation(_ email: String, houseId: String, housename: String, success: @escaping SuccessClosure, failure: @escaping ErrorClosure) {
         let simpleBody: [String: AnyObject] = ["email": email as AnyObject,
-                                                "house_id": houseId as AnyObject]
+                                                "home_id": houseId as AnyObject,
+                                                "home_name": housename as AnyObject]
         let requestBody: [String: AnyObject] = ["resource": simpleBody as AnyObject]
         
         callApi(Routing.service(tableName: "home_user_relationship").path, method: "POST", queryParams: nil, body: requestBody as AnyObject?, headerParams: sessionHeaderParams, success: success, failure: failure)
@@ -403,7 +404,7 @@ final class RESTAPIEngine {
         let config = URLSessionConfiguration.default
         config.httpAdditionalHeaders = sessionHeaderParams
         let session = URLSession(configuration: config)
-        print("REST(\(method.rawValue))->\(request.url?.absoluteString)")
+        print("REST(\(method.rawValue))->\(String(describing: request.url?.absoluteString))")
         
         let task = session.dataTask(with: request, completionHandler: { data, response, error -> Void in
             self.callCountIncrement(false)

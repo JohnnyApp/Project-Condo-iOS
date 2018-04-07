@@ -57,15 +57,15 @@ class CreateHouseViewController: UIViewController {
         
         homeRecord = HomeRecord()
         RESTAPIEngine.sharedEngine.createNewHouse(HomeRequestBody, success: { response in
-            
+            let nametemp = self.HouseNameTxt.text!
             let records = response!["resource"] as! JSONArray
             for recordInfo in records {
-                if recordInfo["_id"] != nil {
+                if (recordInfo["_id"] != nil) {
                     idtemp = recordInfo["_id"] as! String
                 }
             }
             if idtemp != "" {
-                self.createUserHomeRelationship(tmpHouseid: idtemp)
+                self.createUserHomeRelationship(tmpHouseid: idtemp, hn: nametemp)
             }
             
         }, failure: { error in
@@ -76,16 +76,15 @@ class CreateHouseViewController: UIViewController {
             }
         })
         self.showHouseListViewController()
-        
     }
     
-    fileprivate func createUserHomeRelationship(tmpHouseid :String) {
+    fileprivate func createUserHomeRelationship(tmpHouseid :String, hn :String) {
         
         let defaults = UserDefaults.standard
         let curremail = defaults.string(forKey: kUserEmail)! as String
         
-        RESTAPIEngine.sharedEngine.createUserHomeRelation(curremail, houseId: tmpHouseid, success: { response in
-            Alert.showAlertWithMessage("Successful House Creation!", fromViewController: self)
+        RESTAPIEngine.sharedEngine.createUserHomeRelation(curremail, houseId: tmpHouseid, housename: hn, success: { response in
+            //Alert.showAlertWithMessage("Successful House Creation!", fromViewController: self)
         }, failure: { error in
             NSLog("Error creating user and home relationship: \(error)")
             DispatchQueue.main.async {

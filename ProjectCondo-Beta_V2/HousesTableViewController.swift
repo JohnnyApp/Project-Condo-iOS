@@ -12,10 +12,10 @@ class HousesTableViewController: UITableViewController, HomesDelegate{
     
     fileprivate var homeArray2: [String:String] = [:]
     fileprivate var houseArrayTemp: [String]!
-    fileprivate var homesByHome = [String: [HomeRecord]]()
-    fileprivate var currentHomes:HomeRecord? = nil
+    fileprivate var homesByHome = [String: [HomeUserRecord]]()
+    fileprivate var currentHomes:HomeUserRecord? = nil
     fileprivate let dataAccess = DataAccess.sharedInstance
-    fileprivate var homes = [HomeRecord]()
+    fileprivate var homes = [HomeUserRecord]()
 
     @IBAction func OpenCreateHouse(_ sender: Any) {
         showCreateHouseViewController();
@@ -52,9 +52,10 @@ class HousesTableViewController: UITableViewController, HomesDelegate{
         var homeName = "(no-name)"
         print("Start: NOTHING")
         if let home = homeForIndexPath(indexPath) {
-            
-            homeName = home.houseName
-            print("Home Name: " + homeName)
+            if home.home_name != nil {
+                homeName = home.home_name
+                print("Home Name: " + homeName)
+            }
         }
         
         cell.textLabel?.text = homeName
@@ -62,21 +63,21 @@ class HousesTableViewController: UITableViewController, HomesDelegate{
         return cell //4.
     }
     
-    fileprivate func reloadHomesForUser(_ homes:HomeRecord?) {
+    fileprivate func reloadHomesForUser(_ homes:HomeUserRecord?) {
         currentHomes = homes
         let defaults = UserDefaults.standard
         let curremail = defaults.string(forKey: kUserEmail)! as String
         dataAccess.getHomes(currentHomes, email: curremail, resultDelegate: self)
     }
     
-    fileprivate func homeForIndexPath(_ indexPath:IndexPath) -> HomeRecord? {
-        var home:HomeRecord? = nil
+    fileprivate func homeForIndexPath(_ indexPath:IndexPath) -> HomeUserRecord? {
+        var home:HomeUserRecord? = nil
         home = homes[(indexPath as NSIndexPath).row]
         return home
     }
     
     //Homes Delegate
-    func setHomes(_ homes: [HomeRecord]) {
+    func setHomes(_ homes: [HomeUserRecord]) {
         self.homes = homes
         tableView.setContentOffset(CGPoint.zero, animated: true)
         tableView.reloadData()

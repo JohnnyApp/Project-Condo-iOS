@@ -27,6 +27,7 @@
 		DF6E83331EF7960B009CF79E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6E83321EF7960B009CF79E /* LoginViewController.swift */; };
 		DF6E83351EF7975E009CF79E /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6E83341EF7975E009CF79E /* RegisterViewController.swift */; };
 		DF6E83381EF7A3AC009CF79E /* RestAPIEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6E83371EF7A3AC009CF79E /* RestAPIEngine.swift */; };
+		DFA92B262078830100A974A5 /* HomeUserRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA92B252078830100A974A5 /* HomeUserRecord.swift */; };
 		DFD94C581FFF2D15004D3DEC /* NIKApiInvoker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD94C571FFF2D15004D3DEC /* NIKApiInvoker.swift */; };
 		DFD94C5A1FFF2D5A004D3DEC /* NIKFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD94C591FFF2D5A004D3DEC /* NIKFile.swift */; };
 		DFD94C5C1FFF3D6F004D3DEC /* Test1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD94C5B1FFF3D6F004D3DEC /* Test1ViewController.swift */; };
@@ -84,6 +85,7 @@
 		DF6E83321EF7960B009CF79E /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		DF6E83341EF7975E009CF79E /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		DF6E83371EF7A3AC009CF79E /* RestAPIEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RestAPIEngine.swift; path = ../RestAPIEngine.swift; sourceTree = "<group>"; };
+		DFA92B252078830100A974A5 /* HomeUserRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUserRecord.swift; sourceTree = "<group>"; };
 		DFD94C571FFF2D15004D3DEC /* NIKApiInvoker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NIKApiInvoker.swift; sourceTree = "<group>"; };
 		DFD94C591FFF2D5A004D3DEC /* NIKFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NIKFile.swift; sourceTree = "<group>"; };
 		DFD94C5B1FFF3D6F004D3DEC /* Test1ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Test1ViewController.swift; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 			children = (
 				DF05A0111EFA3E9500232A0B /* GroupRecord.swift */,
 				DF22B037200B133100D27BDA /* HomeRecord.swift */,
+				DFA92B252078830100A974A5 /* HomeUserRecord.swift */,
 				DF22B035200B132000D27BDA /* UserRecord.swift */,
 			);
 			name = Model;
@@ -549,6 +552,7 @@
 				DF6E83031EF794ED009CF79E /* AppDelegate.swift in Sources */,
 				DF22B038200B133100D27BDA /* HomeRecord.swift in Sources */,
 				DF6E83051EF794ED009CF79E /* FirstViewController.swift in Sources */,
+				DFA92B262078830100A974A5 /* HomeUserRecord.swift in Sources */,
 				DF22B036200B132000D27BDA /* UserRecord.swift in Sources */,
 				DFDE3E731F1ACF95003F3F99 /* WhiteBoardTableViewController.swift in Sources */,
 				DF05A0121EFA3E9500232A0B /* GroupRecord.swift in Sources */,

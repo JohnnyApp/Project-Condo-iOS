@@ -1,3 +1,8 @@
+
+
+
+
+
 //
 //  HomeRecord.swift
 //  ProjectCondo-Beta_V2
@@ -10,7 +15,7 @@
 import UIKit
 
 extension Dictionary {
-    func nonNull(_ key: Key) -> String {
+    func nonNull3(_ key: Key) -> String {
         let value = self[key]
         if value is NSNull {
             return ""
@@ -37,7 +42,7 @@ class HomeRecord: Equatable {
     }
     
     init(json: JSON) {
-        id = json["id"] as! String
+        id = json["_id"] as! String
         houseName = json.nonNull("housename")
         address1 = json.nonNull("address1")
         if json["address2"] != nil {
